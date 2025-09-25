@@ -210,8 +210,8 @@ export default function AdminPage() {
             <Image 
               src="https://ik.imagekit.io/meoh789/logo-dgp.png" 
               alt="GameVault Logo" 
-              width={50} 
-              height={50} 
+              width={64} 
+              height={64} 
               className="rounded"
             />
           </div>

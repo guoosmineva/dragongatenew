@@ -128,7 +128,7 @@ export default function HomePage() {
                   <div className="aspect-video bg-gray-800 rounded-lg mb-4 overflow-hidden">
                     {game.bannerImage?.url ? (
                       <Image
-                        src={`${STRAPI_URL}${game.bannerImage.url}`}
+                        src={game.bannerImage.url}
                         alt={game.title}
                         width={400}
                         height={225}

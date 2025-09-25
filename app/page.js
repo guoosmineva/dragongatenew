@@ -21,11 +21,11 @@ export default function HomePage() {
   const fetchHomeData = async () => {
     try {
       // Fetch featured games
-      const gamesRes = await fetch(`${STRAPI_URL}/api/strapi/games?featured=true`)
+      const gamesRes = await fetch(`/api/strapi/games?featured=true`)
       const gamesData = await gamesRes.json()
       
       // Fetch recent articles  
-      const articlesRes = await fetch(`${STRAPI_URL}/api/strapi/articles`)
+      const articlesRes = await fetch(`/api/strapi/articles`)
       const articlesData = await articlesRes.json()
 
       setGames(gamesData.data || [])

@@ -98,8 +98,8 @@ export default function HomePage() {
             <Image 
               src="https://ik.imagekit.io/meoh789/logo-dgp.png" 
               alt="Game Catalog Logo" 
-              width={64} 
-              height={64} 
+              width={80} 
+              height={80} 
               className="rounded"
             />
           </Link>

@@ -19,6 +19,7 @@ export default function CatalogPage() {
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('')
+  const { t } = useLanguage()
 
   const categories = ['Action', 'RPG', 'Strategy', 'Adventure', 'Simulation', 'Puzzle']
 

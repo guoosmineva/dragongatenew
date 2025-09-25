@@ -169,9 +169,9 @@ export default function CatalogPage() {
       {/* Page Header */}
       <section className="py-12 px-4">
         <div className="container mx-auto">
-          <h1 className="text-4xl font-bold text-white mb-4 text-center">Game Catalog</h1>
+          <h1 className="text-4xl font-bold text-white mb-4 text-center">{t('gameCatalog')}</h1>
           <p className="text-gray-300 text-center mb-8 max-w-2xl mx-auto">
-            Explore our complete collection of games. Use the search and filters to find your perfect game.
+            {t('exploreCollection')}
           </p>
 
           {/* Search and Filters */}
@@ -180,7 +180,7 @@ export default function CatalogPage() {
               <div className="flex-1">
                 <Input
                   type="text"
-                  placeholder="Search games by name..."
+                  placeholder={t('searchPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 h-12"
@@ -189,13 +189,13 @@ export default function CatalogPage() {
               <div className="w-full md:w-48">
                 <Select value={categoryFilter} onValueChange={setCategoryFilter}>
                   <SelectTrigger className="bg-white/10 border-white/20 text-white h-12">
-                    <SelectValue placeholder="Filter by category" />
+                    <SelectValue placeholder={t('filterByCategory')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Categories</SelectItem>
+                    <SelectItem value="all">{t('allCategories')}</SelectItem>
                     {categories.map((category) => (
                       <SelectItem key={category} value={category}>
-                        {category}
+                        {t(category)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -206,9 +206,9 @@ export default function CatalogPage() {
             {/* Results Info */}
             <div className="text-center mb-8">
               <p className="text-gray-300">
-                {loading ? 'Loading...' : `Found ${games.length} games`}
-                {searchQuery && ` for "${searchQuery}"`}
-                {categoryFilter && ` in ${categoryFilter}`}
+                {loading ? t('loading') : `${t('foundGames')} ${games.length} ${t('games')}`}
+                {searchQuery && ` ${t('forQuery')} "${searchQuery}"`}
+                {categoryFilter && categoryFilter !== 'all' && ` ${t('inCategory')} ${t(categoryFilter)}`}
               </p>
             </div>
           </div>

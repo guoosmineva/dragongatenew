@@ -198,7 +198,7 @@ export default function TrendingPage() {
                   <div className="flex gap-2">
                     <Link href={`/game/${game.slug}`} className="flex-1">
                       <Button variant="outline" size="sm" className="border-blue-500/30 text-yellow-400 hover:bg-blue-500/20 w-full font-semibold">
-                        {t('viewDetails')}
+                        View Details
                       </Button>
                     </Link>
                     <Button 

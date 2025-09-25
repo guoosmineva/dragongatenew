@@ -284,7 +284,6 @@ export default function HomePage() {
                   height={32} 
                   className="rounded"
                 />
-                <span className="text-white text-xl font-bold">GameVault</span>
               </div>
               <p className="text-gray-400 mb-4">
                 {t('ultimateDestination')}

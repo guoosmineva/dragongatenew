@@ -23,7 +23,7 @@ export function MobileNavigation() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline" size="sm" className="md:hidden border-white/20 text-white hover:bg-white/10">
+        <Button variant="outline" size="sm" className="md:hidden border-red-500/30 text-red-500 hover:bg-red-500/20">
           <Menu className="w-5 h-5" />
         </Button>
       </SheetTrigger>

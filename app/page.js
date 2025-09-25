@@ -263,7 +263,7 @@ export default function HomePage() {
 
             <div className="text-center mt-12">
               <Link href="/blog">
-                <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+                <Button variant="outline" className="border-white/20 text-yellow-400 hover:bg-white/10 font-semibold">
                   {t('viewAllArticles')}
                 </Button>
               </Link>

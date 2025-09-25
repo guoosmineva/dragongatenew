@@ -87,8 +87,8 @@ export default function NewGamePage() {
             <Image 
               src="https://ik.imagekit.io/meoh789/logo-dgp.png" 
               alt="GameVault Logo" 
-              width={40} 
-              height={40} 
+              width={64} 
+              height={64} 
               className="rounded"
             />
           </div>

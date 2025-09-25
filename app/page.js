@@ -20,13 +20,55 @@ export default function HomePage() {
 
   const fetchHomeData = async () => {
     try {
-      // Fetch featured games
-      const gamesRes = await fetch(`/api/strapi/games?featured=true`)
-      const gamesData = await gamesRes.json()
-      
-      // Fetch recent articles  
-      const articlesRes = await fetch(`/api/strapi/articles`)
-      const articlesData = await articlesRes.json()
+      // Try external API first, fallback to mock data if it fails
+      let gamesData, articlesData
+
+      try {
+        const gamesRes = await fetch(`/api/strapi/games?featured=true`)
+        if (gamesRes.ok) {
+          const data = await gamesRes.json()
+          gamesData = data
+        } else {
+          throw new Error('API failed')
+        }
+      } catch (error) {
+        console.warn('API failed, using fallback data')
+        // Fallback mock data
+        gamesData = {
+          data: [
+            {
+              id: 1, documentId: 'wukong-1', title: 'Wukong', 
+              description: 'Epic action RPG based on the legendary Monkey King.',
+              category: 'Action', slug: 'wukong', featured: true, downloads: 125000,
+              bannerImage: { url: 'https://images.unsplash.com/photo-1673350808686-209dc177c898?w=400&h=225&fit=crop' }
+            },
+            {
+              id: 2, documentId: 'call-me-champion-2', title: 'Call Me Champion',
+              description: 'Intense competitive fighting game.',
+              category: 'Action', slug: 'call-me-champion', featured: true, downloads: 89000,
+              bannerImage: { url: 'https://images.unsplash.com/photo-1543622748-5ee7237e8565?w=400&h=225&fit=crop' }
+            },
+            {
+              id: 3, documentId: 'civilization-3', title: 'Civilization',
+              description: 'Build and expand your empire through the ages.',
+              category: 'Strategy', slug: 'civilization', featured: true, downloads: 234000,
+              bannerImage: { url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=225&fit=crop' }
+            }
+          ]
+        }
+      }
+
+      try {
+        const articlesRes = await fetch(`/api/strapi/articles`)
+        if (articlesRes.ok) {
+          const data = await articlesRes.json()
+          articlesData = data
+        } else {
+          throw new Error('Articles API failed')
+        }
+      } catch (error) {
+        articlesData = { data: [] } // Empty articles for now
+      }
 
       setGames(gamesData.data || [])
       setArticles(articlesData.data || [])

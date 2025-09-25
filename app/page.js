@@ -251,7 +251,7 @@ export default function HomePage() {
                     <div className="flex items-center justify-between">
                       <span className="text-gray-400 text-sm">{new Date(article.publishedDate).toLocaleDateString()}</span>
                       <Link href={`/article/${article.slug}`}>
-                        <Button variant="outline" size="sm" className="border-purple-500/30 text-purple-300 hover:bg-purple-500/20">
+                        <Button variant="outline" size="sm" className="border-purple-500/30 text-yellow-400 hover:bg-purple-500/20 font-semibold">
                           {t('readMore')}
                         </Button>
                       </Link>

@@ -196,14 +196,14 @@ export default function TrendingPage() {
                   </div>
                   <div className="flex gap-2">
                     <Link href={`/game/${game.slug}`} className="flex-1">
-                      <Button variant="outline" size="sm" className="border-blue-500/30 text-blue-300 hover:bg-blue-500/20 w-full">
-                        View Details
+                      <Button variant="outline" size="sm" className="border-blue-500/30 text-yellow-400 hover:bg-blue-500/20 w-full font-semibold">
+                        {t('viewDetails')}
                       </Button>
                     </Link>
                     <Button 
                       onClick={() => handleDownload(game)}
                       size="sm" 
-                      className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"
+                      className="bg-green-600 hover:bg-green-700 text-yellow-400 flex items-center gap-2 font-semibold"
                     >
                       <Download className="w-4 h-4" />
                       Download

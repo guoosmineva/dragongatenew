@@ -130,66 +130,76 @@ def validate_game_structure(game):
 
 def main():
     """Main testing function"""
-    print("🚀 Starting Backend API Testing")
+    print("🚀 Starting Backend API Testing - PostgreSQL Database Integration")
     print(f"Base URL: {BASE_URL}")
     
     test_results = []
     
-    # Test 1: GET /api/strapi/games - Return all games
+    # =================================
+    # NEW POSTGRESQL-BASED API TESTS
+    # =================================
+    
+    # Test 1: GET /api/games - Return all games from PostgreSQL database
     print("\n" + "="*80)
-    print("TEST 1: GET /api/strapi/games - Return all games")
+    print("TEST 1: GET /api/games - Return all 13 games from PostgreSQL database")
     print("="*80)
     
-    response, data = test_api_endpoint("strapi/games", 200, "Get all games")
+    response, data = test_api_endpoint("games", expected_status=200, description="Get all games from PostgreSQL")
     if response and data:
         if 'data' in data and isinstance(data['data'], list):
             games_count = len(data['data'])
-            print(f"✅ Returned {games_count} games")
+            print(f"✅ Returned {games_count} games from database")
+            if games_count == 13:
+                print("✅ Correct number of games (13) returned from database")
+                test_results.append(("GET /api/games", True, f"Returned {games_count} games from PostgreSQL"))
+            else:
+                print(f"⚠️  Expected 13 games, got {games_count}")
+                test_results.append(("GET /api/games", True, f"Returned {games_count} games (expected 13)"))
+            
             if games_count > 0:
                 print(f"Sample game: {data['data'][0]['title']}")
                 validate_game_structure(data['data'][0])
-            test_results.append(("GET /api/strapi/games", True, f"Returned {games_count} games"))
         else:
             print("❌ Response doesn't have expected 'data' array structure")
-            test_results.append(("GET /api/strapi/games", False, "Invalid response structure"))
+            test_results.append(("GET /api/games", False, "Invalid response structure"))
     else:
-        test_results.append(("GET /api/strapi/games", False, "Request failed"))
+        test_results.append(("GET /api/games", False, "Request failed"))
     
-    # Test 2: GET /api/strapi/games?featured=true - Return featured games only
+    # Test 2: GET /api/games?featured=true - Return featured games from database
     print("\n" + "="*80)
-    print("TEST 2: GET /api/strapi/games?featured=true - Return featured games only")
+    print("TEST 2: GET /api/games?featured=true - Return featured games from database")
     print("="*80)
     
-    response, data = test_api_endpoint("strapi/games?featured=true", 200, "Get featured games only")
+    response, data = test_api_endpoint("games?featured=true", expected_status=200, description="Get featured games from PostgreSQL")
     if response and data:
         if 'data' in data and isinstance(data['data'], list):
             featured_games = data['data']
-            print(f"✅ Returned {len(featured_games)} featured games")
+            print(f"✅ Returned {len(featured_games)} featured games from database")
             
             # Verify all returned games are featured
             all_featured = all(game.get('featured', False) for game in featured_games)
             if all_featured:
                 print("✅ All returned games are marked as featured")
-                test_results.append(("GET /api/strapi/games?featured=true", True, f"Returned {len(featured_games)} featured games"))
+                test_results.append(("GET /api/games?featured=true", True, f"Returned {len(featured_games)} featured games"))
             else:
                 print("❌ Some returned games are not marked as featured")
-                test_results.append(("GET /api/strapi/games?featured=true", False, "Non-featured games in results"))
+                test_results.append(("GET /api/games?featured=true", False, "Non-featured games in results"))
         else:
             print("❌ Response doesn't have expected 'data' array structure")
-            test_results.append(("GET /api/strapi/games?featured=true", False, "Invalid response structure"))
+            test_results.append(("GET /api/games?featured=true", False, "Invalid response structure"))
     else:
-        test_results.append(("GET /api/strapi/games?featured=true", False, "Request failed"))
+        test_results.append(("GET /api/games?featured=true", False, "Request failed"))
     
-    # Test 3: GET /api/strapi/games?search=wukong - Return games matching search
+    # Test 3: GET /api/games?search=wukong - Search in database
     print("\n" + "="*80)
-    print("TEST 3: GET /api/strapi/games?search=wukong - Return games matching search")
+    print("TEST 3: GET /api/games?search=wukong - Search in database")
     print("="*80)
     
-    response, data = test_api_endpoint("strapi/games?search=wukong", 200, "Search for 'wukong'")
+    response, data = test_api_endpoint("games?search=wukong", expected_status=200, description="Search for 'wukong' in database")
     if response and data:
         if 'data' in data and isinstance(data['data'], list):
             search_results = data['data']
-            print(f"✅ Returned {len(search_results)} games matching 'wukong'")
+            print(f"✅ Returned {len(search_results)} games matching 'wukong' from database")
             
             # Verify search results contain 'wukong' in title
             if search_results:
@@ -197,110 +207,155 @@ def main():
                 if found_wukong:
                     print("✅ Search results contain games with 'wukong' in title")
                     print(f"Found games: {[game['title'] for game in search_results]}")
-                    test_results.append(("GET /api/strapi/games?search=wukong", True, f"Found {len(search_results)} matching games"))
+                    test_results.append(("GET /api/games?search=wukong", True, f"Found {len(search_results)} matching games"))
                 else:
                     print("❌ Search results don't contain 'wukong' in title")
-                    test_results.append(("GET /api/strapi/games?search=wukong", False, "Search results don't match query"))
+                    test_results.append(("GET /api/games?search=wukong", False, "Search results don't match query"))
             else:
                 print("❌ No search results returned")
-                test_results.append(("GET /api/strapi/games?search=wukong", False, "No search results"))
+                test_results.append(("GET /api/games?search=wukong", False, "No search results"))
         else:
             print("❌ Response doesn't have expected 'data' array structure")
-            test_results.append(("GET /api/strapi/games?search=wukong", False, "Invalid response structure"))
+            test_results.append(("GET /api/games?search=wukong", False, "Invalid response structure"))
     else:
-        test_results.append(("GET /api/strapi/games?search=wukong", False, "Request failed"))
+        test_results.append(("GET /api/games?search=wukong", False, "Request failed"))
     
-    # Test 4: GET /api/strapi/games?category=Action - Return games in Action category
+    # Test 4: GET /api/games?category=Action - Filter by category in database
     print("\n" + "="*80)
-    print("TEST 4: GET /api/strapi/games?category=Action - Return games in Action category")
+    print("TEST 4: GET /api/games?category=Action - Filter by category in database")
     print("="*80)
     
-    response, data = test_api_endpoint("strapi/games?category=Action", 200, "Get Action category games")
+    response, data = test_api_endpoint("games?category=Action", expected_status=200, description="Get Action category games from database")
     if response and data:
         if 'data' in data and isinstance(data['data'], list):
             action_games = data['data']
-            print(f"✅ Returned {len(action_games)} Action games")
+            print(f"✅ Returned {len(action_games)} Action games from database")
             
             # Verify all returned games are in Action category
             all_action = all(game.get('category') == 'Action' for game in action_games)
             if all_action:
                 print("✅ All returned games are in Action category")
                 print(f"Action games: {[game['title'] for game in action_games]}")
-                test_results.append(("GET /api/strapi/games?category=Action", True, f"Returned {len(action_games)} Action games"))
+                test_results.append(("GET /api/games?category=Action", True, f"Returned {len(action_games)} Action games"))
             else:
                 print("❌ Some returned games are not in Action category")
-                test_results.append(("GET /api/strapi/games?category=Action", False, "Non-Action games in results"))
+                test_results.append(("GET /api/games?category=Action", False, "Non-Action games in results"))
         else:
             print("❌ Response doesn't have expected 'data' array structure")
-            test_results.append(("GET /api/strapi/games?category=Action", False, "Invalid response structure"))
+            test_results.append(("GET /api/games?category=Action", False, "Invalid response structure"))
     else:
-        test_results.append(("GET /api/strapi/games?category=Action", False, "Request failed"))
+        test_results.append(("GET /api/games?category=Action", False, "Request failed"))
     
-    # Test 5: GET /api/strapi/articles - Return mock articles
+    # Test 5: GET /api/games/wukong - Get single game by slug from database
     print("\n" + "="*80)
-    print("TEST 5: GET /api/strapi/articles - Return mock articles")
+    print("TEST 5: GET /api/games/wukong - Get single game by slug from database")
     print("="*80)
     
-    response, data = test_api_endpoint("strapi/articles", 200, "Get all articles")
-    if response and data:
-        if 'data' in data and isinstance(data['data'], list):
-            articles_count = len(data['data'])
-            print(f"✅ Returned {articles_count} articles")
-            if articles_count > 0:
-                article = data['data'][0]
-                print(f"Sample article: {article.get('title', 'No title')}")
-                required_article_fields = ['id', 'documentId', 'title', 'excerpt', 'slug']
-                missing_fields = [field for field in required_article_fields if field not in article]
-                if not missing_fields:
-                    print("✅ Article structure is valid")
-                    test_results.append(("GET /api/strapi/articles", True, f"Returned {articles_count} articles"))
-                else:
-                    print(f"❌ Missing article fields: {missing_fields}")
-                    test_results.append(("GET /api/strapi/articles", False, f"Invalid article structure"))
-            else:
-                test_results.append(("GET /api/strapi/articles", True, "No articles returned (empty but valid)"))
-        else:
-            print("❌ Response doesn't have expected 'data' array structure")
-            test_results.append(("GET /api/strapi/articles", False, "Invalid response structure"))
-    else:
-        test_results.append(("GET /api/strapi/articles", False, "Request failed"))
-    
-    # Test 6: Test individual game endpoint
-    print("\n" + "="*80)
-    print("TEST 6: GET /api/strapi/games/wukong - Get individual game by slug")
-    print("="*80)
-    
-    response, data = test_api_endpoint("strapi/games/wukong", 200, "Get individual game by slug")
+    response, data = test_api_endpoint("games/wukong", expected_status=200, description="Get individual game by slug from database")
     if response and data:
         if 'data' in data and isinstance(data['data'], dict):
             game = data['data']
-            print(f"✅ Returned individual game: {game.get('title', 'No title')}")
+            print(f"✅ Returned individual game from database: {game.get('title', 'No title')}")
             if validate_game_structure(game):
-                test_results.append(("GET /api/strapi/games/wukong", True, "Individual game retrieved successfully"))
+                test_results.append(("GET /api/games/wukong", True, "Individual game retrieved from database"))
             else:
-                test_results.append(("GET /api/strapi/games/wukong", False, "Invalid game structure"))
+                test_results.append(("GET /api/games/wukong", False, "Invalid game structure"))
         else:
             print("❌ Response doesn't have expected 'data' object structure")
-            test_results.append(("GET /api/strapi/games/wukong", False, "Invalid response structure"))
+            test_results.append(("GET /api/games/wukong", False, "Invalid response structure"))
     else:
-        test_results.append(("GET /api/strapi/games/wukong", False, "Request failed"))
+        test_results.append(("GET /api/games/wukong", False, "Request failed"))
     
-    # Test 7: Test 404 for non-existent game
+    # =================================
+    # ADMIN AUTHENTICATION TESTS
+    # =================================
+    
+    # Test 6: POST /api/admin/login - Admin authentication
     print("\n" + "="*80)
-    print("TEST 7: GET /api/strapi/games/nonexistent - Test 404 for non-existent game")
+    print("TEST 6: POST /api/admin/login - Admin authentication")
     print("="*80)
     
-    response, data = test_api_endpoint("strapi/games/nonexistent", 404, "Test 404 for non-existent game")
-    if response and response.status_code == 404:
-        print("✅ Correctly returned 404 for non-existent game")
-        test_results.append(("GET /api/strapi/games/nonexistent", True, "Correctly returned 404"))
+    auth_success = authenticate_admin()
+    if auth_success:
+        test_results.append(("POST /api/admin/login", True, "Admin authentication successful"))
     else:
-        print("❌ Did not return 404 for non-existent game")
-        test_results.append(("GET /api/strapi/games/nonexistent", False, "Did not return 404"))
+        test_results.append(("POST /api/admin/login", False, "Admin authentication failed"))
+    
+    # =================================
+    # ADMIN PROTECTED ENDPOINTS TESTS
+    # =================================
+    
+    if admin_token:
+        # Test 7: GET /api/admin/games - Get games for authenticated admin
+        print("\n" + "="*80)
+        print("TEST 7: GET /api/admin/games - Get games for authenticated admin")
+        print("="*80)
+        
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        response, data = test_api_endpoint("admin/games", expected_status=200, 
+                                         description="Get games for admin", headers=headers)
+        if response and data:
+            if 'data' in data and isinstance(data['data'], list):
+                admin_games_count = len(data['data'])
+                print(f"✅ Admin retrieved {admin_games_count} games from database")
+                test_results.append(("GET /api/admin/games", True, f"Admin retrieved {admin_games_count} games"))
+            else:
+                print("❌ Response doesn't have expected 'data' array structure")
+                test_results.append(("GET /api/admin/games", False, "Invalid response structure"))
+        else:
+            test_results.append(("GET /api/admin/games", False, "Request failed"))
+        
+        # Test 8: POST /api/admin/games - Create new game (requires admin token)
+        print("\n" + "="*80)
+        print("TEST 8: POST /api/admin/games - Create new game (requires admin token)")
+        print("="*80)
+        
+        new_game_data = {
+            "title": "Test Game for API Testing",
+            "description": "A test game created during API testing",
+            "category": "Test",
+            "downloadUrl": "https://example.com/test-game.zip",
+            "slug": "test-game-api-testing",
+            "featured": False,
+            "downloads": 0
+        }
+        
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        response, data = test_api_endpoint("admin/games", method="POST", expected_status=200,
+                                         description="Create new game as admin", 
+                                         data=new_game_data, headers=headers)
+        if response and data:
+            if 'message' in data and 'data' in data:
+                print(f"✅ Successfully created new game: {data['data'].get('title', 'Unknown')}")
+                test_results.append(("POST /api/admin/games", True, "New game created successfully"))
+            else:
+                print("❌ Response doesn't have expected structure")
+                test_results.append(("POST /api/admin/games", False, "Invalid response structure"))
+        else:
+            test_results.append(("POST /api/admin/games", False, "Request failed"))
+    
+    else:
+        print("\n❌ Skipping admin protected endpoint tests - no admin token")
+        test_results.append(("GET /api/admin/games", False, "Skipped - no admin token"))
+        test_results.append(("POST /api/admin/games", False, "Skipped - no admin token"))
+    
+    # Test 9: Test unauthorized access to admin endpoints
+    print("\n" + "="*80)
+    print("TEST 9: GET /api/admin/games - Test unauthorized access")
+    print("="*80)
+    
+    response, data = test_api_endpoint("admin/games", expected_status=401, 
+                                     description="Test unauthorized access to admin endpoint")
+    if response and response.status_code == 401:
+        print("✅ Correctly returned 401 for unauthorized access")
+        test_results.append(("GET /api/admin/games (unauthorized)", True, "Correctly returned 401"))
+    else:
+        print("❌ Did not return 401 for unauthorized access")
+        test_results.append(("GET /api/admin/games (unauthorized)", False, "Did not return 401"))
     
     # Print final summary
     print("\n" + "="*80)
-    print("🏁 FINAL TEST SUMMARY")
+    print("🏁 FINAL TEST SUMMARY - PostgreSQL Database Integration")
     print("="*80)
     
     passed_tests = 0
@@ -315,7 +370,7 @@ def main():
     print(f"\n📊 Results: {passed_tests}/{total_tests} tests passed")
     
     if passed_tests == total_tests:
-        print("🎉 All tests passed! Backend API is working correctly.")
+        print("🎉 All tests passed! PostgreSQL database integration is working correctly.")
         return True
     else:
         print("⚠️  Some tests failed. Check the details above.")

@@ -25,7 +25,7 @@ export default function CatalogPage() {
 
   const fetchGames = async () => {
     try {
-      let url = `${STRAPI_URL}/api/strapi/games`
+      let url = `/api/strapi/games`
       
       const params = new URLSearchParams()
       

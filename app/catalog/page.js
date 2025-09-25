@@ -102,7 +102,7 @@ export default function CatalogPage() {
             game.title.toLowerCase().includes(searchQuery.toLowerCase())
           )
         }
-        if (categoryFilter) {
+        if (categoryFilter && categoryFilter !== 'all') {
           games = games.filter(game => game.category === categoryFilter)
         }
       }

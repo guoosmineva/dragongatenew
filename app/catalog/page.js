@@ -128,36 +128,40 @@ export default function CatalogPage() {
             <Image 
               src="https://ik.imagekit.io/meoh789/logo-dgp.png" 
               alt="Game Catalog Logo" 
-              width={64} 
-              height={64} 
+              width={80} 
+              height={80} 
               className="rounded"
             />
           </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="text-white hover:text-blue-300 transition-colors">Home</Link>
-            <Link href="/catalog" className="text-blue-300 font-semibold">Catalog</Link>
-            <Link href="/trending" className="text-white hover:text-blue-300 transition-colors">Trending Games</Link>
-            <Link href="/blog" className="text-white hover:text-blue-300 transition-colors">Blog</Link>
+            <Link href="/" className="text-white hover:text-blue-300 transition-colors">{t('home')}</Link>
+            <Link href="/catalog" className="text-blue-300 font-semibold">{t('catalog')}</Link>
+            <Link href="/trending" className="text-white hover:text-blue-300 transition-colors">{t('trending')}</Link>
+            <Link href="/blog" className="text-white hover:text-blue-300 transition-colors">{t('blog')}</Link>
           </nav>
 
           <div className="flex items-center space-x-3">
-            <a 
-              href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
-            >
-              Telegram
-            </a>
-            <a 
-              href="https://wa.me/62816339871?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
-            >
-              WhatsApp
-            </a>
+            <LanguageSwitcher />
+            <div className="hidden md:flex items-center space-x-3">
+              <a 
+                href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
+              >
+                Telegram
+              </a>
+              <a 
+                href="https://wa.me/62816339871?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
+              >
+                WhatsApp
+              </a>
+            </div>
+            <MobileNavigation />
           </div>
         </div>
       </header>

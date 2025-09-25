@@ -133,8 +133,8 @@ export default function BlogPage() {
             <Image 
               src="https://ik.imagekit.io/meoh789/logo-dgp.png" 
               alt="Game Catalog Logo" 
-              width={40} 
-              height={40} 
+              width={50} 
+              height={50} 
               className="rounded"
             />
           </Link>

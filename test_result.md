@@ -101,3 +101,100 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Test the Next.js backend API routes and functionality for a game catalog API with mock data. The frontend is getting 502 errors when trying to access these endpoints externally, but they work locally."
+
+backend:
+  - task: "GET /api/strapi/games - Return all games"
+    implemented: true
+    working: "NA"
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "testing"
+          comment: "Initial testing setup - endpoint implemented with mock data"
+
+  - task: "GET /api/strapi/games?featured=true - Return featured games only"
+    implemented: true
+    working: "NA"
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "testing"
+          comment: "Initial testing setup - featured filter implemented"
+
+  - task: "GET /api/strapi/games?search=wukong - Return games matching search"
+    implemented: true
+    working: "NA"
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "testing"
+          comment: "Initial testing setup - search filter implemented"
+
+  - task: "GET /api/strapi/games?category=Action - Return games in Action category"
+    implemented: true
+    working: "NA"
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "testing"
+          comment: "Initial testing setup - category filter implemented"
+
+  - task: "GET /api/strapi/articles - Return mock articles"
+    implemented: true
+    working: "NA"
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "testing"
+          comment: "Initial testing setup - articles endpoint implemented"
+
+frontend:
+  - task: "Frontend integration with backend APIs"
+    implemented: true
+    working: false
+    file: "app/page.js"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "main"
+          comment: "User reported 502 errors when accessing endpoints externally"
+
+metadata:
+  created_by: "testing_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "GET /api/strapi/games - Return all games"
+    - "GET /api/strapi/games?featured=true - Return featured games only"
+    - "GET /api/strapi/games?search=wukong - Return games matching search"
+    - "GET /api/strapi/games?category=Action - Return games in Action category"
+    - "GET /api/strapi/articles - Return mock articles"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+    - agent: "testing"
+      message: "Starting backend API testing for game catalog endpoints. Will test all API routes with various query parameters and verify data structure and filtering functionality."

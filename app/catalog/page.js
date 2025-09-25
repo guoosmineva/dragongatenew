@@ -220,12 +220,12 @@ export default function CatalogPage() {
         <div className="container mx-auto">
           {loading ? (
             <div className="text-center py-12">
-              <div className="text-white text-xl">Loading games...</div>
+              <div className="text-white text-xl">{t('loading')}</div>
             </div>
           ) : games.length === 0 ? (
             <div className="text-center py-12">
-              <div className="text-white text-xl mb-4">No games found</div>
-              <p className="text-gray-400">Try adjusting your search or filter criteria</p>
+              <div className="text-white text-xl mb-4">{t('noGamesFound')}</div>
+              <p className="text-gray-400">{t('tryAdjusting')}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -252,17 +252,17 @@ export default function CatalogPage() {
                     <div className="flex items-start justify-between mb-2">
                       <CardTitle className="text-white text-lg leading-tight">{game.title}</CardTitle>
                       <Badge variant="secondary" className="bg-blue-500/20 text-blue-300 border-blue-500/30 ml-2 shrink-0">
-                        {game.category}
+                        {t(game.category)}
                       </Badge>
                     </div>
                     <CardDescription className="text-gray-300 mb-4 line-clamp-2 text-sm">
                       {game.description}
                     </CardDescription>
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-400 text-sm">{(game.downloads || 0).toLocaleString()} downloads</span>
+                      <span className="text-gray-400 text-sm">{(game.downloads || 0).toLocaleString()} {t('downloads')}</span>
                       <Link href={`/game/${game.slug}`}>
                         <Button variant="outline" size="sm" className="border-blue-500/30 text-yellow-400 hover:bg-blue-500/20 font-semibold">
-                          View
+                          {t('viewGame')}
                         </Button>
                       </Link>
                     </div>

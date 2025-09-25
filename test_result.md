@@ -350,24 +350,29 @@ frontend:
     implemented: true
     working: false
     file: "app/page.js"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: false
     status_history:
         - working: false
           agent: "main"
           comment: "User reported 502 errors when accessing endpoints externally"
+        - working: false
+          agent: "testing"
+          comment: "❌ CRITICAL: Frontend cannot access backend APIs externally due to 502 Bad Gateway errors. This is caused by Kubernetes ingress configuration issues, not frontend or backend code problems."
 
 metadata:
   created_by: "testing_agent"
-  version: "1.0"
-  test_sequence: 1
+  version: "2.0"
+  test_sequence: 2
   run_ui: false
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "External API Access (Kubernetes Ingress)"
   stuck_tasks:
     - "External API Access (Kubernetes Ingress)"
+    - "Frontend integration with backend APIs"
   test_all: false
   test_priority: "high_first"
 
@@ -376,3 +381,5 @@ agent_communication:
       message: "Starting backend API testing for game catalog endpoints. Will test all API routes with various query parameters and verify data structure and filtering functionality."
     - agent: "testing"
       message: "✅ BACKEND TESTING COMPLETE: All API endpoints working perfectly locally. Comprehensive testing shows: 1) All 6 game endpoints return correct data with proper filtering (featured, search, category). 2) Articles endpoint working. 3) Individual game retrieval and 404 handling working. 4) ❌ CRITICAL ISSUE: External access fails with 502 errors - this is a Kubernetes ingress configuration issue, not backend code. Backend implementation is solid."
+    - agent: "testing"
+      message: "🚀 COMPREHENSIVE POSTGRESQL TESTING COMPLETE: All new PostgreSQL-based API endpoints working perfectly locally. ✅ SUCCESSES: 1) GET /api/games returns 17+ games from database 2) All filtering (featured, search, category) working with PostgreSQL queries 3) Individual game retrieval by slug working 4) Admin authentication with JWT working perfectly 5) Admin-protected endpoints working with proper authorization 6) Game creation via admin API working 7) Database integration solid with proper connection handling. ❌ PERSISTENT ISSUE: External API access still fails with 502 errors - this is a Kubernetes ingress/routing issue, NOT a backend implementation problem. All 16+ backend endpoints work perfectly locally but fail externally."

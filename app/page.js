@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { useLanguage } from '@/lib/LanguageContext'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import Link from 'next/link'
 import Image from 'next/image'
-
-const STRAPI_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 export default function HomePage() {
   const [games, setGames] = useState([])
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
+  const { t } = useLanguage()
 
   useEffect(() => {
     fetchHomeData()
@@ -82,7 +83,7 @@ export default function HomePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+        <div className="text-white text-xl">{t('loading')}</div>
       </div>
     )
   }
@@ -104,13 +105,14 @@ export default function HomePage() {
           </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="text-white hover:text-blue-300 transition-colors">Home</Link>
-            <Link href="/catalog" className="text-white hover:text-blue-300 transition-colors">Catalog</Link>
-            <Link href="/trending" className="text-white hover:text-blue-300 transition-colors">Trending Games</Link>
-            <Link href="/blog" className="text-white hover:text-blue-300 transition-colors">Blog</Link>
+            <Link href="/" className="text-white hover:text-blue-300 transition-colors">{t('home')}</Link>
+            <Link href="/catalog" className="text-white hover:text-blue-300 transition-colors">{t('catalog')}</Link>
+            <Link href="/trending" className="text-white hover:text-blue-300 transition-colors">{t('trending')}</Link>
+            <Link href="/blog" className="text-white hover:text-blue-300 transition-colors">{t('blog')}</Link>
           </nav>
 
           <div className="flex items-center space-x-3">
+            <LanguageSwitcher />
             <a 
               href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
               target="_blank"
@@ -135,20 +137,20 @@ export default function HomePage() {
       <section className="py-20 px-4">
         <div className="container mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Discover Amazing <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Games</span>
+            {t('discoverGames').split(' ').slice(0, -1).join(' ')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">{t('discoverGames').split(' ').pop()}</span>
           </h1>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Your ultimate destination for the best mobile and PC games. Explore our curated collection and find your next adventure.
+            {t('ultimateDestination')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/catalog">
               <Button size="lg" className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-3 text-lg">
-                Browse Catalog
+                {t('browseCatalog')}
               </Button>
             </Link>
             <Link href="/trending">
               <Button variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10 px-8 py-3 text-lg">
-                Trending Games
+                {t('trending')}
               </Button>
             </Link>
           </div>
@@ -159,8 +161,8 @@ export default function HomePage() {
       <section className="py-16 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-4">Featured Games</h2>
-            <p className="text-gray-300">Handpicked games just for you</p>
+            <h2 className="text-3xl font-bold text-white mb-4">{t('featuredGames')}</h2>
+            <p className="text-gray-300">{t('handpickedGames')}</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -185,7 +187,7 @@ export default function HomePage() {
                   <div className="flex items-start justify-between">
                     <CardTitle className="text-white text-xl">{game.title}</CardTitle>
                     <Badge variant="secondary" className="bg-blue-500/20 text-blue-300 border-blue-500/30">
-                      {game.category}
+                      {t(game.category)}
                     </Badge>
                   </div>
                 </CardHeader>
@@ -194,10 +196,10 @@ export default function HomePage() {
                     {game.description}
                   </CardDescription>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-400 text-sm">{game.downloads?.toLocaleString()} downloads</span>
+                    <span className="text-gray-400 text-sm">{game.downloads?.toLocaleString()} {t('downloads')}</span>
                     <Link href={`/game/${game.slug}`}>
                       <Button variant="outline" className="border-blue-500/30 text-blue-300 hover:bg-blue-500/20">
-                        View Game
+                        {t('viewGame')}
                       </Button>
                     </Link>
                   </div>
@@ -209,7 +211,7 @@ export default function HomePage() {
           <div className="text-center mt-12">
             <Link href="/catalog">
               <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
-                View All Games
+                {t('viewAllGames')}
               </Button>
             </Link>
           </div>
@@ -221,8 +223,8 @@ export default function HomePage() {
         <section className="py-16 px-4">
           <div className="container mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-white mb-4">Latest Articles</h2>
-              <p className="text-gray-300">Stay updated with gaming news and tips</p>
+              <h2 className="text-3xl font-bold text-white mb-4">{t('latestArticles')}</h2>
+              <p className="text-gray-300">{t('stayUpdated')}</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -250,7 +252,7 @@ export default function HomePage() {
                       <span className="text-gray-400 text-sm">{new Date(article.publishedDate).toLocaleDateString()}</span>
                       <Link href={`/article/${article.slug}`}>
                         <Button variant="outline" size="sm" className="border-purple-500/30 text-purple-300 hover:bg-purple-500/20">
-                          Read More
+                          {t('readMore')}
                         </Button>
                       </Link>
                     </div>
@@ -262,7 +264,7 @@ export default function HomePage() {
             <div className="text-center mt-12">
               <Link href="/blog">
                 <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
-                  View All Articles
+                  {t('viewAllArticles')}
                 </Button>
               </Link>
             </div>
@@ -286,22 +288,22 @@ export default function HomePage() {
                 <span className="text-white text-xl font-bold">GameVault</span>
               </div>
               <p className="text-gray-400 mb-4">
-                Your ultimate destination for discovering amazing games across all platforms.
+                {t('ultimateDestination')}
               </p>
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Navigation</h3>
+              <h3 className="text-white font-semibold mb-4">{t('navigation')}</h3>
               <div className="space-y-2">
-                <Link href="/" className="block text-gray-400 hover:text-white transition-colors">Home</Link>
-                <Link href="/catalog" className="block text-gray-400 hover:text-white transition-colors">Catalog</Link>
-                <Link href="/trending" className="block text-gray-400 hover:text-white transition-colors">Trending</Link>
-                <Link href="/blog" className="block text-gray-400 hover:text-white transition-colors">Blog</Link>
+                <Link href="/" className="block text-gray-400 hover:text-white transition-colors">{t('home')}</Link>
+                <Link href="/catalog" className="block text-gray-400 hover:text-white transition-colors">{t('catalog')}</Link>
+                <Link href="/trending" className="block text-gray-400 hover:text-white transition-colors">{t('trending')}</Link>
+                <Link href="/blog" className="block text-gray-400 hover:text-white transition-colors">{t('blog')}</Link>
               </div>
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Contact</h3>
+              <h3 className="text-white font-semibold mb-4">{t('contact')}</h3>
               <div className="space-y-2">
                 <a 
                   href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
@@ -323,17 +325,17 @@ export default function HomePage() {
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Legal</h3>
+              <h3 className="text-white font-semibold mb-4">{t('legal')}</h3>
               <div className="space-y-2">
-                <Link href="/privacy" className="block text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
-                <Link href="/terms" className="block text-gray-400 hover:text-white transition-colors">Terms of Service</Link>
+                <Link href="/privacy" className="block text-gray-400 hover:text-white transition-colors">{t('privacyPolicy')}</Link>
+                <Link href="/terms" className="block text-gray-400 hover:text-white transition-colors">{t('termsOfService')}</Link>
               </div>
             </div>
           </div>
           
           <div className="border-t border-white/10 mt-8 pt-8 text-center">
             <p className="text-gray-400">
-              © 2025 GameVault. All rights reserved.
+              © 2025 GameVault. {t('allRightsReserved')}
             </p>
           </div>
         </div>

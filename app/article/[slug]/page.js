@@ -465,17 +465,64 @@ Welcome to the wonderful world of strategic gaming – your empire awaits!`,
       {/* Footer */}
       <footer className="bg-black/40 backdrop-blur-sm border-t border-white/10 py-12 px-4 mt-16">
         <div className="container mx-auto">
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-3 mb-4">
-              <Image 
-                src="https://ik.imagekit.io/meoh789/logo-dgp.png" 
-                alt="GameVault Logo" 
-                width={32} 
-                height={32} 
-                className="rounded"
-              />
-              <span className="text-white text-xl font-bold">GameVault</span>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center space-x-3 mb-4">
+                <Image 
+                  src="https://ik.imagekit.io/meoh789/logo-dgp.png" 
+                  alt="GameVault Logo" 
+                  width={40} 
+                  height={40} 
+                  className="rounded"
+                />
+              </div>
+              <p className="text-gray-400 mb-4">
+                Your ultimate destination for discovering amazing games across all platforms.
+              </p>
             </div>
+            
+            <div>
+              <h3 className="text-white font-semibold mb-4">Navigation</h3>
+              <div className="space-y-2">
+                <Link href="/" className="block text-gray-400 hover:text-white transition-colors">Home</Link>
+                <Link href="/catalog" className="block text-gray-400 hover:text-white transition-colors">Catalog</Link>
+                <Link href="/trending" className="block text-gray-400 hover:text-white transition-colors">Trending</Link>
+                <Link href="/blog" className="block text-gray-400 hover:text-white transition-colors">Blog</Link>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-white font-semibold mb-4">Contact</h3>
+              <div className="space-y-2">
+                <a 
+                  href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-gray-400 hover:text-blue-400 transition-colors"
+                >
+                  Telegram
+                </a>
+                <a 
+                  href="https://wa.me/62816339871?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-gray-400 hover:text-green-400 transition-colors"
+                >
+                  WhatsApp
+                </a>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-white font-semibold mb-4">Legal</h3>
+              <div className="space-y-2">
+                <Link href="/privacy" className="block text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
+                <Link href="/terms" className="block text-gray-400 hover:text-white transition-colors">Terms of Service</Link>
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-white/10 mt-8 pt-8 text-center">
             <p className="text-gray-400">
               © 2025 GameVault. All rights reserved.
             </p>

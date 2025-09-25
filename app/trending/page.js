@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Download, TrendingUp } from 'lucide-react'
 import { useLanguage } from '@/lib/LanguageContext'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { MobileNavigation } from '@/components/MobileNavigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -87,7 +89,7 @@ export default function TrendingPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading trending games...</div>
+        <div className="text-white text-xl">{t('loading')}</div>
       </div>
     )
   }
@@ -101,36 +103,40 @@ export default function TrendingPage() {
             <Image 
               src="https://ik.imagekit.io/meoh789/logo-dgp.png" 
               alt="Game Catalog Logo" 
-              width={64} 
-              height={64} 
+              width={80} 
+              height={80} 
               className="rounded"
             />
           </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="text-white hover:text-blue-300 transition-colors">Home</Link>
-            <Link href="/catalog" className="text-white hover:text-blue-300 transition-colors">Catalog</Link>
-            <Link href="/trending" className="text-blue-300 font-semibold">Trending Games</Link>
-            <Link href="/blog" className="text-white hover:text-blue-300 transition-colors">Blog</Link>
+            <Link href="/" className="text-white hover:text-blue-300 transition-colors">{t('home')}</Link>
+            <Link href="/catalog" className="text-white hover:text-blue-300 transition-colors">{t('catalog')}</Link>
+            <Link href="/trending" className="text-blue-300 font-semibold">{t('trending')}</Link>
+            <Link href="/blog" className="text-white hover:text-blue-300 transition-colors">{t('blog')}</Link>
           </nav>
 
           <div className="flex items-center space-x-3">
-            <a 
-              href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
-            >
-              Telegram
-            </a>
-            <a 
-              href="https://wa.me/62816339871?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
-            >
-              WhatsApp
-            </a>
+            <LanguageSwitcher />
+            <div className="hidden md:flex items-center space-x-3">
+              <a 
+                href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
+              >
+                Telegram
+              </a>
+              <a 
+                href="https://wa.me/62816339871?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
+              >
+                WhatsApp
+              </a>
+            </div>
+            <MobileNavigation />
           </div>
         </div>
       </header>
@@ -140,10 +146,10 @@ export default function TrendingPage() {
         <div className="container mx-auto text-center">
           <div className="flex items-center justify-center mb-4">
             <TrendingUp className="w-8 h-8 text-yellow-400 mr-3" />
-            <h1 className="text-4xl font-bold text-white">Trending Games</h1>
+            <h1 className="text-4xl font-bold text-white">{t('trendingGames')}</h1>
           </div>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Discover the hottest games everyone's playing! These games are trending on TikTok Live and have the highest downloads.
+            {t('hottestGames')}
           </p>
         </div>
       </section>
@@ -157,7 +163,7 @@ export default function TrendingPage() {
                 {/* Trending Badge */}
                 <div className="absolute top-4 left-4 z-10">
                   <Badge className="bg-yellow-500 text-black font-bold">
-                    #{game.trendingRank} Trending
+                    #{game.trendingRank} {t('trending')}
                   </Badge>
                 </div>
 
@@ -182,7 +188,7 @@ export default function TrendingPage() {
                   <div className="flex items-start justify-between mb-2">
                     <CardTitle className="text-white text-lg leading-tight">{game.title}</CardTitle>
                     <Badge variant="secondary" className="bg-purple-500/20 text-purple-300 border-purple-500/30 ml-2 shrink-0">
-                      {game.category}
+                      {t(game.category)}
                     </Badge>
                   </div>
                   <CardDescription className="text-gray-300 mb-4 line-clamp-3 text-sm">
@@ -191,14 +197,14 @@ export default function TrendingPage() {
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-gray-400 text-sm">
                       <Download className="w-4 h-4 inline mr-1" />
-                      {game.downloads.toLocaleString()} downloads
+                      {game.downloads.toLocaleString()} {t('downloads')}
                     </span>
-                    <span className="text-yellow-400 text-sm font-semibold">🔥 Trending</span>
+                    <span className="text-yellow-400 text-sm font-semibold">🔥 {t('trending')}</span>
                   </div>
                   <div className="flex gap-2">
                     <Link href={`/game/${game.slug}`} className="flex-1">
                       <Button variant="outline" size="sm" className="border-blue-500/30 text-yellow-400 hover:bg-blue-500/20 w-full font-semibold">
-                        View Details
+                        {t('viewDetails')}
                       </Button>
                     </Link>
                     <Button 
@@ -207,7 +213,7 @@ export default function TrendingPage() {
                       className="bg-green-600 hover:bg-green-700 text-yellow-400 flex items-center gap-2 font-semibold"
                     >
                       <Download className="w-4 h-4" />
-                      Download
+                      {t('download')}
                     </Button>
                   </div>
                 </CardContent>
@@ -232,22 +238,22 @@ export default function TrendingPage() {
                 />
               </div>
               <p className="text-gray-400 mb-4">
-                Your ultimate destination for discovering amazing games across all platforms.
+                {t('ultimateDestination')}
               </p>
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Navigation</h3>
+              <h3 className="text-white font-semibold mb-4">{t('navigation')}</h3>
               <div className="space-y-2">
-                <Link href="/" className="block text-gray-400 hover:text-white transition-colors">Home</Link>
-                <Link href="/catalog" className="block text-gray-400 hover:text-white transition-colors">Catalog</Link>
-                <Link href="/trending" className="block text-gray-400 hover:text-white transition-colors">Trending</Link>
-                <Link href="/blog" className="block text-gray-400 hover:text-white transition-colors">Blog</Link>
+                <Link href="/" className="block text-gray-400 hover:text-white transition-colors">{t('home')}</Link>
+                <Link href="/catalog" className="block text-gray-400 hover:text-white transition-colors">{t('catalog')}</Link>
+                <Link href="/trending" className="block text-gray-400 hover:text-white transition-colors">{t('trending')}</Link>
+                <Link href="/blog" className="block text-gray-400 hover:text-white transition-colors">{t('blog')}</Link>
               </div>
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Contact</h3>
+              <h3 className="text-white font-semibold mb-4">{t('contact')}</h3>
               <div className="space-y-2">
                 <a 
                   href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
@@ -269,17 +275,17 @@ export default function TrendingPage() {
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Legal</h3>
+              <h3 className="text-white font-semibold mb-4">{t('legal')}</h3>
               <div className="space-y-2">
-                <Link href="/privacy" className="block text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
-                <Link href="/terms" className="block text-gray-400 hover:text-white transition-colors">Terms of Service</Link>
+                <Link href="/privacy" className="block text-gray-400 hover:text-white transition-colors">{t('privacyPolicy')}</Link>
+                <Link href="/terms" className="block text-gray-400 hover:text-white transition-colors">{t('termsOfService')}</Link>
               </div>
             </div>
           </div>
           
           <div className="border-t border-white/10 mt-8 pt-8 text-center">
             <p className="text-gray-400">
-              © 2025 GameVault. All rights reserved.
+              © 2025 GameVault. {t('allRightsReserved')}
             </p>
           </div>
         </div>

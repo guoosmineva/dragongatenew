@@ -25,16 +25,22 @@ export default function CatalogPage() {
 
   const fetchGames = async () => {
     try {
-      let url = `${STRAPI_URL}/api/games?populate=*&sort=createdAt:desc&pagination[limit]=50`
+      let url = `${STRAPI_URL}/api/strapi/games`
+      
+      const params = new URLSearchParams()
       
       // Add search filter
       if (searchQuery.trim()) {
-        url += `&filters[title][$containsi]=${encodeURIComponent(searchQuery.trim())}`
+        params.append('search', searchQuery.trim())
       }
       
       // Add category filter
       if (categoryFilter) {
-        url += `&filters[category][$eq]=${encodeURIComponent(categoryFilter)}`
+        params.append('category', categoryFilter)
+      }
+
+      if (params.toString()) {
+        url += `?${params.toString()}`
       }
 
       const response = await fetch(url)

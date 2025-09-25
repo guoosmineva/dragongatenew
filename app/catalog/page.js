@@ -166,7 +166,7 @@ export default function CatalogPage() {
                     <div className="aspect-video bg-gray-800 rounded-t-lg overflow-hidden">
                       {game.bannerImage?.url ? (
                         <Image
-                          src={`${STRAPI_URL}${game.bannerImage.url}`}
+                          src={game.bannerImage.url}
                           alt={game.title}
                           width={400}
                           height={225}

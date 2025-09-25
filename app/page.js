@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useLanguage } from '@/lib/LanguageContext'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { MobileNavigation } from '@/components/MobileNavigation'
 import Link from 'next/link'
 import Image from 'next/image'
 

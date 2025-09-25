@@ -48,9 +48,11 @@ def test_local_endpoint(endpoint, method="GET", expected_status=200, description
                     print(f"Single data object returned")
                 elif 'message' in json_data:
                     print(f"Message: {json_data['message']}")
+                elif 'error' in json_data:
+                    print(f"Error: {json_data['error']}")
             return response, json_data
         except json.JSONDecodeError:
-            print(f"❌ Response is not valid JSON: {response.text[:200]}")
+            print(f"Response text: {response.text[:200] if response.text else 'Empty response'}")
             return response, None
             
     except requests.exceptions.RequestException as e:

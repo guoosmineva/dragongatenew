@@ -107,63 +107,102 @@ user_problem_statement: "Test the Next.js backend API routes and functionality f
 backend:
   - task: "GET /api/strapi/games - Return all games"
     implemented: true
-    working: "NA"
+    working: true
     file: "app/api/[[...path]]/route.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "testing"
           comment: "Initial testing setup - endpoint implemented with mock data"
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED: Returns 6 games with correct structure. All fields present (id, title, description, category, etc.). Local testing successful."
 
   - task: "GET /api/strapi/games?featured=true - Return featured games only"
     implemented: true
-    working: "NA"
+    working: true
     file: "app/api/[[...path]]/route.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "testing"
           comment: "Initial testing setup - featured filter implemented"
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED: Returns 5 featured games. Filter working correctly - all returned games have featured=true. Local testing successful."
 
   - task: "GET /api/strapi/games?search=wukong - Return games matching search"
     implemented: true
-    working: "NA"
+    working: true
     file: "app/api/[[...path]]/route.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "testing"
           comment: "Initial testing setup - search filter implemented"
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED: Returns 1 game matching 'wukong' search. Search filter working correctly with case-insensitive matching. Local testing successful."
 
   - task: "GET /api/strapi/games?category=Action - Return games in Action category"
     implemented: true
-    working: "NA"
+    working: true
     file: "app/api/[[...path]]/route.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "testing"
           comment: "Initial testing setup - category filter implemented"
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED: Returns 3 Action games. Category filter working correctly - all returned games have category='Action'. Local testing successful."
 
   - task: "GET /api/strapi/articles - Return mock articles"
     implemented: true
-    working: "NA"
+    working: true
     file: "app/api/[[...path]]/route.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "testing"
           comment: "Initial testing setup - articles endpoint implemented"
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED: Returns 1 article with correct structure (id, title, excerpt, slug, etc.). Local testing successful."
+
+  - task: "GET /api/strapi/games/[slug] - Get individual game by slug"
+    implemented: true
+    working: true
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED: Individual game retrieval by slug working. Returns single game object with all required fields. 404 handling for non-existent games also working correctly."
+
+  - task: "External API Access (Kubernetes Ingress)"
+    implemented: true
+    working: false
+    file: "Kubernetes/Ingress Configuration"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "testing"
+          comment: "❌ CRITICAL: All external API calls return 502 Bad Gateway. Local APIs work perfectly (7/7 tests pass) but external access fails (0/3 tests pass). This is a Kubernetes ingress/routing configuration issue, not a backend code issue."
 
 frontend:
   - task: "Frontend integration with backend APIs"

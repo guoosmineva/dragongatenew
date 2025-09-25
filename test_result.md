@@ -224,16 +224,14 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "GET /api/strapi/games - Return all games"
-    - "GET /api/strapi/games?featured=true - Return featured games only"
-    - "GET /api/strapi/games?search=wukong - Return games matching search"
-    - "GET /api/strapi/games?category=Action - Return games in Action category"
-    - "GET /api/strapi/articles - Return mock articles"
-  stuck_tasks: []
+  current_focus: []
+  stuck_tasks:
+    - "External API Access (Kubernetes Ingress)"
   test_all: false
   test_priority: "high_first"
 
 agent_communication:
     - agent: "testing"
       message: "Starting backend API testing for game catalog endpoints. Will test all API routes with various query parameters and verify data structure and filtering functionality."
+    - agent: "testing"
+      message: "✅ BACKEND TESTING COMPLETE: All API endpoints working perfectly locally. Comprehensive testing shows: 1) All 6 game endpoints return correct data with proper filtering (featured, search, category). 2) Articles endpoint working. 3) Individual game retrieval and 404 handling working. 4) ❌ CRITICAL ISSUE: External access fails with 502 errors - this is a Kubernetes ingress configuration issue, not backend code. Backend implementation is solid."

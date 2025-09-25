@@ -198,7 +198,7 @@ export default function HomePage() {
                   <div className="flex items-center justify-between">
                     <span className="text-gray-400 text-sm">{game.downloads?.toLocaleString()} {t('downloads')}</span>
                     <Link href={`/game/${game.slug}`}>
-                      <Button variant="outline" className="border-blue-500/30 text-blue-300 hover:bg-blue-500/20">
+                      <Button variant="outline" className="border-blue-500/30 text-yellow-400 hover:bg-blue-500/20 font-semibold">
                         {t('viewGame')}
                       </Button>
                     </Link>

@@ -190,7 +190,7 @@ export default function HomePage() {
                     {article.featuredImage?.url && (
                       <div className="aspect-video bg-gray-800 rounded-lg mb-4 overflow-hidden">
                         <Image
-                          src={`${STRAPI_URL}${article.featuredImage.url}`}
+                          src={article.featuredImage.url}
                           alt={article.title}
                           width={400}
                           height={225}

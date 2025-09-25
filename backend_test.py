@@ -33,16 +33,32 @@ ADMIN_EMAIL = "admin@gamevault.com"
 ADMIN_PASSWORD = "GameVault2025!"
 admin_token = None
 
-def test_api_endpoint(endpoint, expected_status=200, description=""):
+def test_api_endpoint(endpoint, method="GET", expected_status=200, description="", data=None, headers=None):
     """Test an API endpoint and return the response"""
     url = urljoin(BASE_URL + "/", endpoint)
     print(f"\n{'='*60}")
     print(f"Testing: {description}")
+    print(f"Method: {method}")
     print(f"URL: {url}")
+    if headers:
+        print(f"Headers: {headers}")
+    if data:
+        print(f"Data: {json.dumps(data, indent=2)}")
     print(f"{'='*60}")
     
     try:
-        response = requests.get(url, timeout=10)
+        if method == "GET":
+            response = requests.get(url, timeout=10, headers=headers)
+        elif method == "POST":
+            response = requests.post(url, json=data, timeout=10, headers=headers)
+        elif method == "PUT":
+            response = requests.put(url, json=data, timeout=10, headers=headers)
+        elif method == "DELETE":
+            response = requests.delete(url, timeout=10, headers=headers)
+        else:
+            print(f"❌ Unsupported method: {method}")
+            return None, None
+            
         print(f"Status Code: {response.status_code}")
         print(f"Response Headers: {dict(response.headers)}")
         
@@ -71,6 +87,30 @@ def test_api_endpoint(endpoint, expected_status=200, description=""):
     except requests.exceptions.RequestException as e:
         print(f"❌ Request failed: {e}")
         return None, None
+
+def authenticate_admin():
+    """Authenticate admin user and get token"""
+    global admin_token
+    print("\n" + "="*80)
+    print("ADMIN AUTHENTICATION")
+    print("="*80)
+    
+    auth_data = {
+        "email": ADMIN_EMAIL,
+        "password": ADMIN_PASSWORD
+    }
+    
+    response, data = test_api_endpoint("admin/login", method="POST", expected_status=200, 
+                                     description="Admin login", data=auth_data)
+    
+    if response and data and 'token' in data:
+        admin_token = data['token']
+        print(f"✅ Admin authentication successful")
+        print(f"Token: {admin_token[:20]}...")
+        return True
+    else:
+        print("❌ Admin authentication failed")
+        return False
 
 def validate_game_structure(game):
     """Validate that a game object has the expected structure"""

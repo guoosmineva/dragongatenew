@@ -5,12 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Download, TrendingUp } from 'lucide-react'
+import { useLanguage } from '@/lib/LanguageContext'
 import Link from 'next/link'
 import Image from 'next/image'
 
 export default function TrendingPage() {
   const [games, setGames] = useState([])
   const [loading, setLoading] = useState(true)
+  const { t } = useLanguage()
 
   useEffect(() => {
     fetchTrendingGames()

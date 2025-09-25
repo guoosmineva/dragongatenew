@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Backend API Testing Script for Game Catalog API
-Tests all API endpoints with various query parameters and validates responses
+Backend API Testing Script for Game Catalog API with PostgreSQL Database
+Tests all API endpoints including new PostgreSQL-based endpoints and admin functionality
 """
 
 import requests
@@ -27,6 +27,11 @@ def get_base_url():
 
 BASE_URL = get_base_url()
 print(f"Testing API at: {BASE_URL}")
+
+# Admin credentials for testing
+ADMIN_EMAIL = "admin@gamevault.com"
+ADMIN_PASSWORD = "GameVault2025!"
+admin_token = None
 
 def test_api_endpoint(endpoint, expected_status=200, description=""):
     """Test an API endpoint and return the response"""

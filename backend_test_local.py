@@ -175,6 +175,7 @@ def main():
         print("✅ Correctly returned 401 for unauthorized access")
         test_results.append(("GET /api/admin/games (unauthorized)", True, "Correctly returned 401"))
     else:
+        print(f"❌ Expected 401, got {response.status_code if response else 'No response'}")
         test_results.append(("GET /api/admin/games (unauthorized)", False, "Did not return 401"))
     
     # Print final summary

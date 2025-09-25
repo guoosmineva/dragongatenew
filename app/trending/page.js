@@ -95,7 +95,7 @@ export default function TrendingPage() {
       {/* Header */}
       <header className="bg-black/20 backdrop-blur-sm border-b border-white/10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-3">
+          <Link href="/" className="flex items-center">
             <Image 
               src="https://ik.imagekit.io/meoh789/logo-dgp.png" 
               alt="Game Catalog Logo" 
@@ -103,7 +103,6 @@ export default function TrendingPage() {
               height={40} 
               className="rounded"
             />
-            <span className="text-white text-xl font-bold">GameVault</span>
           </Link>
           
           <nav className="hidden md:flex items-center space-x-6">

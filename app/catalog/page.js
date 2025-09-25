@@ -43,9 +43,71 @@ export default function CatalogPage() {
         url += `?${params.toString()}`
       }
 
-      const response = await fetch(url)
-      const data = await response.json()
-      setGames(data.data || [])
+      let games = []
+      
+      try {
+        const response = await fetch(url)
+        if (response.ok) {
+          const data = await response.json()
+          games = data.data || []
+        } else {
+          throw new Error('API failed')
+        }
+      } catch (error) {
+        console.warn('API failed, using fallback data')
+        // Extended fallback mock data
+        const allGames = [
+          {
+            id: 1, documentId: 'wukong-1', title: 'Wukong', 
+            description: 'Epic action RPG based on the legendary Monkey King. Experience breathtaking combat and explore a mystical world filled with ancient legends and powerful enemies.',
+            category: 'Action', slug: 'wukong', featured: true, downloads: 125000,
+            bannerImage: { url: 'https://images.unsplash.com/photo-1673350808686-209dc177c898?w=400&h=225&fit=crop' }
+          },
+          {
+            id: 2, documentId: 'call-me-champion-2', title: 'Call Me Champion',
+            description: 'Intense competitive fighting game where you battle to become the ultimate champion. Master various fighting styles and defeat opponents in epic tournaments.',
+            category: 'Action', slug: 'call-me-champion', featured: true, downloads: 89000,
+            bannerImage: { url: 'https://images.unsplash.com/photo-1543622748-5ee7237e8565?w=400&h=225&fit=crop' }
+          },
+          {
+            id: 3, documentId: 'dragonball-showdown-3', title: 'Dragonball Showdown',
+            description: 'High-energy fighting game featuring your favorite Dragon Ball characters. Unleash devastating attacks and experience the ultimate anime fighting experience.',
+            category: 'Action', slug: 'dragonball-showdown', featured: true, downloads: 156000,
+            bannerImage: { url: 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=400&h=225&fit=crop' }
+          },
+          {
+            id: 4, documentId: 'civilization-4', title: 'Civilization',
+            description: 'Build and expand your empire through the ages. Develop technologies, wage wars, and lead your civilization to greatness in this epic strategy game.',
+            category: 'Strategy', slug: 'civilization', featured: true, downloads: 234000,
+            bannerImage: { url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=225&fit=crop' }
+          },
+          {
+            id: 5, documentId: 'clash-of-clans-5', title: 'Clash of Clans',
+            description: 'The classic strategy game where you build your village, train troops, and battle other players. Join clans and participate in epic clan wars.',
+            category: 'Strategy', slug: 'clash-of-clans', featured: true, downloads: 456000,
+            bannerImage: { url: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=225&fit=crop' }
+          },
+          {
+            id: 6, documentId: 'jiang-hu-6', title: 'Jiang Hu',
+            description: 'Immersive martial arts RPG set in ancient China. Master kung fu techniques, explore vast landscapes, and forge your legend in the world of martial arts.',
+            category: 'RPG', slug: 'jiang-hu', featured: false, downloads: 67000,
+            bannerImage: null
+          }
+        ]
+
+        // Apply client-side filtering as fallback
+        games = allGames
+        if (searchQuery.trim()) {
+          games = games.filter(game => 
+            game.title.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+        }
+        if (categoryFilter) {
+          games = games.filter(game => game.category === categoryFilter)
+        }
+      }
+
+      setGames(games)
     } catch (error) {
       console.error('Error fetching games:', error)
     } finally {

@@ -326,8 +326,8 @@ Welcome to the wonderful world of strategic gaming – your empire awaits!`,
             <Image 
               src="https://ik.imagekit.io/meoh789/logo-dgp.png" 
               alt="Game Catalog Logo" 
-              width={40} 
-              height={40} 
+              width={64} 
+              height={64} 
               className="rounded"
             />
           </Link>

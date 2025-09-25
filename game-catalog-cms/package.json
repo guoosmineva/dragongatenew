@@ -37,5 +37,9 @@
   "strapi": {
     "uuid": "809972ee-c0fa-43c5-bc00-0a13a78c2bf8",
     "installId": "f833f0d3bdd838a9788ce9cf0fd994efd14b91518bc68b8dbd0d801466459e07"
-  }
+  },
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

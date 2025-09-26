@@ -381,7 +381,7 @@ server {
     # Client upload size
     client_max_body_size 10M;
     
-    # Next.js frontend (main application)
+    # Next.js frontend and API routes
     location / {
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
@@ -395,35 +395,6 @@ server {
         proxy_read_timeout 86400;
         proxy_connect_timeout 60s;
         proxy_send_timeout 60s;
-    }
-    
-    # Strapi CMS API endpoints
-    location /strapi/ {
-        proxy_pass http://localhost:1337/;
-        proxy_http_version 1.1;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-        proxy_read_timeout 60s;
-        proxy_connect_timeout 60s;
-        proxy_send_timeout 60s;
-        proxy_buffering on;
-        proxy_buffer_size 4k;
-        proxy_buffers 8 4k;
-    }
-    
-    # Strapi Admin Panel
-    location /admin {
-        proxy_pass http://localhost:1337/admin;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-        proxy_cache_bypass \$http_upgrade;
     }
     
     # Static file caching

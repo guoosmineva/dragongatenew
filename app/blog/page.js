@@ -251,7 +251,7 @@ export default function BlogPage() {
 
                   <Link href={`/article/${article.slug}`}>
                     <Button variant="outline" size="sm" className="border-purple-500/30 text-purple-300 hover:bg-purple-500/20 w-full">
-                      Read Article
+                      {t('readArticle')}
                     </Button>
                   </Link>
                 </CardContent>

@@ -15,13 +15,14 @@ A complete interactive game catalog web application with Next.js 14 frontend and
 
 # 🚀 Production Deployment Guide for VPS
 
-This guide provides complete step-by-step instructions for deploying GameVault on a VPS server running as root.
+Complete step-by-step instructions for deploying GameVault on a VPS server running as root.
 
 **Target Configuration:**
 - Domain: `https://viva-productions.com/`
 - Admin User: `user_davod` / `Kimmy#1234`
 - Database: PostgreSQL 15 on localhost:5432
 - SSL: Let's Encrypt certificates
+- **Architecture**: Next.js + PostgreSQL (Strapi skipped due to memory optimization)
 
 ---
 

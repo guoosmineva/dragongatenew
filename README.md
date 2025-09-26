@@ -477,22 +477,19 @@ sudo -u postgres psql game_catalog_db -c "SELECT title, category, downloads FROM
 
 ---
 
-## Step 12: Create Strapi Admin User
+## Step 12: Admin Panel Access
 
-### 12.1 Access Strapi Admin Panel
-Visit: `https://viva-productions.com/admin`
+### 12.1 Admin Credentials
+- **URL**: https://viva-productions.com/admin
+- **Email**: `user_davod@viva-productions.com`
+- **Password**: `Kimmy#1234`
 
-### 12.2 Create Admin Account
-- Email: `user_davod@viva-productions.com`
-- Password: `Kimmy#1234`
-- First Name: `Davod`
-- Last Name: `User`
-
-### 12.3 Configure API Permissions
-1. Go to Settings → Roles → Public
-2. Enable permissions for:
-   - Game: find, findOne
-   - Article: find, findOne
+### 12.2 Admin Features Available
+- View game statistics dashboard
+- Add, edit, and delete games
+- Manage featured games
+- Control content visibility
+- Monitor download counts
 
 ---
 

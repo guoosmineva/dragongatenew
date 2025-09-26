@@ -257,14 +257,14 @@ async function seedDatabase() {
       }
     }
 
-    // Create admin user
+    // Create admin user with specified credentials
     const hashedPassword = await bcrypt.hash('Kimmy#1234', 10);
     await client.query(`
       INSERT INTO admin_users (email, password) 
       VALUES ($1, $2)
       ON CONFLICT (email) DO UPDATE SET password = EXCLUDED.password;
     `, ['user_davod@viva-productions.com', hashedPassword]);
-    console.log('✅ Admin user created: user_davod');
+    console.log('✅ Admin user created: user_davod@viva-productions.com');
 
     const count = await client.query('SELECT COUNT(*) FROM games');
     console.log(`\n🎯 Total games: ${count.rows[0].count}`);

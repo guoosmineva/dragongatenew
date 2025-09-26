@@ -203,7 +203,7 @@ CREATE INDEX IF NOT EXISTS idx_articles_slug ON articles(slug);
 EOF
 ```
 
-### 5.2 Seed Initial Game Data
+### 5.2 Seed Games and Admin User
 ```bash
 cd /var/www/gamevault
 cat > seed-production.js << 'EOF'

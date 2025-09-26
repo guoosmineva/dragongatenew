@@ -5,12 +5,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Calendar, User, BookOpen } from 'lucide-react'
+import { useLanguage } from '@/lib/LanguageContext'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { MobileNavigation } from '@/components/MobileNavigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
 export default function BlogPage() {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
+  const { t } = useLanguage()
 
   useEffect(() => {
     fetchArticles()

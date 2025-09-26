@@ -518,7 +518,7 @@ systemctl status postgresql
 # Test database connection
 sudo -u postgres psql game_catalog_db -c "SELECT COUNT(*) FROM games;"
 
-# If connection fails, check credentials in .env files
+# If connection fails, check credentials in .env file
 ```
 
 #### 3. Nginx 502 Bad Gateway
@@ -542,25 +542,26 @@ certbot certificates
 certbot renew --force-renewal
 ```
 
-#### 5. Permission Issues
-```bash
-# Set correct ownership
-chown -R root:root /var/www/gamevault
-chmod -R 755 /var/www/gamevault
-
-# Secure environment files
-chmod 600 /var/www/gamevault/.env
-chmod 600 /var/www/gamevault/game-catalog-cms/.env
-```
-
-#### 6. Memory Issues
+#### 5. Memory Issues
 ```bash
 # Check system resources
 free -h
 df -h
 
-# Restart applications if memory usage is high
-pm2 restart all
+# Restart application if memory usage is high
+pm2 restart gamevault-nextjs
+```
+
+#### 6. API Returns "Failed to fetch games"
+```bash
+# Check PostgreSQL is running
+systemctl status postgresql
+
+# Verify games table exists and has data
+sudo -u postgres psql game_catalog_db -c "SELECT COUNT(*) FROM games;"
+
+# Check application logs for database connection errors
+pm2 logs gamevault-nextjs
 ```
 
 ### Debugging Commands
@@ -571,20 +572,19 @@ pm2 status
 pm2 monit
 
 # View logs
-pm2 logs
+pm2 logs gamevault-nextjs
 tail -f /var/log/nginx/access.log
 tail -f /var/log/nginx/error.log
 
 # Test API endpoints
 curl http://localhost:3000/api/games
-curl http://localhost:1337/api/games
 curl https://viva-productions.com/api/games
 
 # Database queries
 sudo -u postgres psql game_catalog_db -c "SELECT * FROM games LIMIT 3;"
 
 # Check running processes
-netstat -tlnp | grep -E ':3000|:1337|:80|:443'
+netstat -tlnp | grep -E ':3000|:80|:443'
 ```
 
 ---
@@ -594,30 +594,31 @@ netstat -tlnp | grep -E ':3000|:1337|:80|:443'
 ### Frontend Website
 - **URL**: https://viva-productions.com/
 - **Features**: Game catalog, search, trending games, blog
-- **Languages**: Indonesian (default), English
+- **Languages**: Indonesian (default), English (click EN/ID flags)
 
-### Admin Panel
-- **URL**: https://viva-productions.com/admin (Next.js admin)
-- **Strapi CMS**: https://viva-productions.com/admin (Strapi admin)
+### Admin Panel (Next.js Built-in)
+- **URL**: https://viva-productions.com/admin
 - **Credentials**: user_davod@viva-productions.com / Kimmy#1234
+- **Features**: Full game management, statistics, CRUD operations
 
 ### API Endpoints
-- **Games**: https://viva-productions.com/api/games
+- **All Games**: https://viva-productions.com/api/games
+- **Featured Games**: https://viva-productions.com/api/games?featured=true
 - **Search**: https://viva-productions.com/api/games?search=wukong
 - **Categories**: https://viva-productions.com/api/games?category=Action
-- **Featured**: https://viva-productions.com/api/games?featured=true
+- **Single Game**: https://viva-productions.com/api/games/wukong
 
 ---
 
 ## 🔒 Security Checklist
 
 - [ ] Change default database passwords
-- [ ] Update JWT secrets with strong random values
+- [ ] Update JWT secrets with strong random values  
 - [ ] Enable firewall (UFW) with proper rules
 - [ ] SSL certificates installed and auto-renewing
 - [ ] Regular database backups configured
-- [ ] File permissions properly set
-- [ ] Environment variables secured
+- [ ] File permissions properly set (755 for directories, 644 for files)
+- [ ] Environment variables secured (600 permissions)
 
 ---
 
@@ -638,8 +639,8 @@ pm2 logs --lines 50
 # Update system packages
 apt update && apt upgrade -y
 
-# Restart applications
-pm2 restart all
+# Restart application
+pm2 restart gamevault-nextjs
 
 # Check disk space
 df -h
@@ -673,12 +674,11 @@ echo "0 2 * * * /usr/local/bin/backup-gamevault" | crontab -
 After completing all steps, verify your deployment:
 
 1. **Frontend**: Visit https://viva-productions.com/ - should show Indonesian game catalog
-2. **Language Switch**: Click EN/ID flags to test language switching
+2. **Language Switch**: Click EN/ID flags to test language switching  
 3. **Game Catalog**: Visit https://viva-productions.com/catalog - should show all games with search
 4. **Trending Games**: Visit https://viva-productions.com/trending - should show trending games
 5. **Blog**: Visit https://viva-productions.com/blog - should show articles
 6. **Admin Panel**: Visit https://viva-productions.com/admin - login with user_davod credentials
-7. **Strapi CMS**: Visit https://viva-productions.com/admin - access Strapi admin panel
 
 ### Expected Game Count
 Your database should contain **13 games** across 6 categories:
@@ -698,12 +698,11 @@ If something goes wrong:
 # Stop all services
 pm2 stop all
 
-# Check what's running on required ports
-netstat -tlnp | grep -E ':3000|:1337'
+# Check what's running on port 3000
+netstat -tlnp | grep :3000
 
 # Kill any processes if needed
 pkill -f next
-pkill -f strapi
 
 # Restart from scratch
 pm2 delete all
@@ -712,4 +711,40 @@ pm2 start ecosystem.config.js
 
 ---
 
-**🎊 Congratulations!** Your GameVault application should now be running successfully at https://viva-productions.com/ with full admin functionality, multi-language support, and all 13 games available for users to discover and download.
+## 💡 Architecture Notes
+
+This deployment uses a **simplified architecture** optimized for VPS hosting:
+
+- **Frontend**: Next.js 14 with React 18
+- **Backend**: Next.js API Routes (no separate backend server needed)
+- **Database**: PostgreSQL 15 with direct connection
+- **Admin**: Built-in Next.js admin panel (no Strapi CMS)
+- **Benefits**: Lower memory usage, simpler deployment, same functionality
+
+### Why Skip Strapi?
+- **Memory Efficient**: Strapi requires 1GB+ RAM just to build
+- **Simpler Deployment**: One application instead of two
+- **Same Features**: All admin functionality available through Next.js admin panel
+- **Better Performance**: Direct database queries are faster
+- **Cost Effective**: Works great on smaller VPS instances
+
+---
+
+## 🎊 Success!
+
+Your GameVault application should now be running successfully at **https://viva-productions.com/** with:
+
+✅ **Full game catalog** with 13 games  
+✅ **Search and filtering** functionality  
+✅ **Multi-language support** (Indonesian default, English switch)  
+✅ **Admin panel** for game management  
+✅ **Responsive design** for mobile and desktop  
+✅ **PostgreSQL database** with real data  
+✅ **SSL certificate** for secure HTTPS  
+✅ **Professional design** with yellow call-to-action buttons
+
+**Admin Access**: https://viva-productions.com/admin (user_davod@viva-productions.com / Kimmy#1234)
+
+---
+
+**Happy Gaming! 🎮**

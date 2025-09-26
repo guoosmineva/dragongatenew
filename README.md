@@ -9,7 +9,7 @@ A complete interactive game catalog web application with Next.js 14 frontend and
 - **Admin Panel**: Secure game management with authentication
 - **Responsive Design**: Mobile-friendly interface
 - **Blog System**: Gaming articles and news
-- **Real-time Updates**: Live content management through Strapi CMS
+- **Real-time Updates**: Direct PostgreSQL database integration
 
 ---
 

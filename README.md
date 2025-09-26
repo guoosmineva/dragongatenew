@@ -39,7 +39,7 @@ curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt-get install -y nodejs
 ```
 
-### 1.3 Install Yarn Package Manager
+### 1.3 Install Yarn and PM2
 ```bash
 npm install -g yarn pm2
 ```

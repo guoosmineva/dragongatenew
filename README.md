@@ -128,10 +128,6 @@ npm install
 ```bash
 cd /var/www/gamevault
 cat > .env << EOF
-# Database Configuration
-MONGO_URL=mongodb://localhost:27017
-DB_NAME=gamevault_db
-
 # Production URLs
 NEXT_PUBLIC_BASE_URL=https://viva-productions.com
 NEXT_PUBLIC_STRAPI_URL=https://viva-productions.com/strapi
@@ -141,6 +137,13 @@ CORS_ORIGINS=https://viva-productions.com,https://www.viva-productions.com
 
 # JWT Security
 JWT_SECRET=GameVault_Production_JWT_Secret_Change_This_In_Production_2025
+
+# PostgreSQL Database (for direct API access)
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_NAME=game_catalog_db
+DATABASE_USERNAME=strapi_user
+DATABASE_PASSWORD=SecurePassword2025!
 EOF
 ```
 

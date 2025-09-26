@@ -180,10 +180,10 @@ export default function BlogPage() {
         <div className="container mx-auto text-center">
           <div className="flex items-center justify-center mb-4">
             <BookOpen className="w-8 h-8 text-purple-400 mr-3" />
-            <h1 className="text-4xl font-bold text-white">Gaming Blog</h1>
+            <h1 className="text-4xl font-bold text-white">{t('gamingBlog')}</h1>
           </div>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Stay updated with the latest gaming news, reviews, guides, and industry insights from our expert team.
+            {t('latestGamingNews')}
           </p>
         </div>
       </section>

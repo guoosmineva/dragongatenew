@@ -462,8 +462,7 @@ ufw status
 ### 11.1 Test Local API Endpoints
 ```bash
 curl http://localhost:3000/api/games
-curl http://localhost:3000/api/strapi/games
-curl http://localhost:1337/api/games
+curl http://localhost:3000/api/admin/login
 ```
 
 ### 11.2 Test External Access

@@ -109,16 +109,10 @@ cd /var/www/gamevault
 # Or upload files via SCP/SFTP
 ```
 
-### 3.2 Install Main Application Dependencies
+### 3.2 Install Dependencies
 ```bash
 cd /var/www/gamevault
 yarn install
-```
-
-### 3.3 Install Strapi Dependencies
-```bash
-cd /var/www/gamevault/game-catalog-cms
-npm install
 ```
 
 ---

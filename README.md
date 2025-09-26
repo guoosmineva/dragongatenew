@@ -327,10 +327,15 @@ cd /var/www/gamevault
 yarn build
 ```
 
-### 6.2 Build Strapi Backend
+### 6.2 Build Strapi Backend (with memory optimization)
 ```bash
 cd /var/www/gamevault/game-catalog-cms
-npm run build
+
+# Build with increased Node.js memory limit
+NODE_OPTIONS="--max_old_space_size=2048" npm run build
+
+# If you get memory errors, try with more memory:
+# NODE_OPTIONS="--max_old_space_size=4096" npm run build
 ```
 
 ---

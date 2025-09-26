@@ -288,7 +288,7 @@ node seed-production.js
 
 ---
 
-## Step 6: Build Applications
+## Step 6: Build and Start Application
 
 ### 6.1 Build Next.js Frontend
 ```bash
@@ -296,16 +296,8 @@ cd /var/www/gamevault
 yarn build
 ```
 
-### 6.2 Build Strapi Backend (with memory optimization)
-```bash
-cd /var/www/gamevault/game-catalog-cms
-
-# Build with increased Node.js memory limit
-NODE_OPTIONS="--max_old_space_size=2048" npm run build
-
-# If you get memory errors, try with more memory:
-# NODE_OPTIONS="--max_old_space_size=4096" npm run build
-```
+### **Note: Strapi Skipped Due to Memory Optimization**
+*Strapi requires significant memory to build. Your GameVault app is designed to work perfectly with direct PostgreSQL integration through Next.js API routes, providing the same functionality with better performance on smaller VPS instances.*
 
 ---
 

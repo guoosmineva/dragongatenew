@@ -125,46 +125,20 @@ cd /var/www/gamevault
 cat > .env << EOF
 # Production URLs
 NEXT_PUBLIC_BASE_URL=https://viva-productions.com
-NEXT_PUBLIC_STRAPI_URL=https://viva-productions.com/strapi
+NEXT_PUBLIC_STRAPI_URL=https://viva-productions.com
 
 # CORS Configuration
 CORS_ORIGINS=https://viva-productions.com,https://www.viva-productions.com
 
 # JWT Security
-JWT_SECRET=GameVault_Production_JWT_Secret_Change_This_In_Production_2025
+JWT_SECRET=GameVault_Production_JWT_Secret_2025_Very_Long_And_Secure
 
-# PostgreSQL Database (for direct API access)
+# PostgreSQL Database Configuration
 DATABASE_HOST=localhost
 DATABASE_PORT=5432
 DATABASE_NAME=game_catalog_db
 DATABASE_USERNAME=strapi_user
 DATABASE_PASSWORD=SecurePassword2025!
-EOF
-```
-
-### 4.2 Strapi Environment Variables
-```bash
-cd /var/www/gamevault/game-catalog-cms
-cat > .env << EOF
-# Database Configuration
-DATABASE_CLIENT=postgres
-DATABASE_HOST=localhost
-DATABASE_PORT=5432
-DATABASE_NAME=game_catalog_db
-DATABASE_USERNAME=strapi_user
-DATABASE_PASSWORD=SecurePassword2025!
-
-# Server Configuration
-HOST=0.0.0.0
-PORT=1337
-NODE_ENV=production
-
-# Security Keys (IMPORTANT: Change these in production!)
-APP_KEYS=GameVaultKey1,GameVaultKey2,GameVaultKey3,GameVaultKey4
-API_TOKEN_SALT=GameVaultApiTokenSalt2025
-ADMIN_JWT_SECRET=GameVaultAdminJwtSecret2025VeryLongAndSecure
-TRANSFER_TOKEN_SALT=GameVaultTransferTokenSalt2025
-JWT_SECRET=GameVaultJwtSecret2025ProductionReady
 EOF
 ```
 

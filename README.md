@@ -429,7 +429,7 @@ systemctl restart nginx
 
 ### 9.1 Obtain SSL Certificate
 ```bash
-certbot --nginx -d viva-productions.com -d www.viva-productions.com --non-interactive --agree-tos --email admin@viva-productions.com
+certbot --nginx -d viva-productions.com -d www.viva-productions.com --non-interactive --agree-tos --email user_davod@viva-productions.com
 ```
 
 ### 9.2 Test SSL Renewal

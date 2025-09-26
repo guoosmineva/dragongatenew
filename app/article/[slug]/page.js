@@ -5,6 +5,9 @@ import { useParams } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Calendar, User, ArrowLeft, Share2, BookOpen } from 'lucide-react'
+import { useLanguage } from '@/lib/LanguageContext'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { MobileNavigation } from '@/components/MobileNavigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -12,6 +15,7 @@ export default function ArticleDetailPage() {
   const params = useParams()
   const [article, setArticle] = useState(null)
   const [loading, setLoading] = useState(true)
+  const { t } = useLanguage()
 
   useEffect(() => {
     if (params.slug) {
@@ -298,7 +302,7 @@ Welcome to the wonderful world of strategic gaming – your empire awaits!`,
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading article...</div>
+        <div className="text-white text-xl">{t('loading')}</div>
       </div>
     )
   }
@@ -307,10 +311,10 @@ Welcome to the wonderful world of strategic gaming – your empire awaits!`,
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
         <div className="container mx-auto px-4 py-20 text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Article Not Found</h1>
-          <p className="text-gray-300 mb-8">The article you're looking for doesn't exist or has been removed.</p>
+          <h1 className="text-4xl font-bold text-white mb-4">{t('articleNotFound')}</h1>
+          <p className="text-gray-300 mb-8">{t('articleNotExist')}</p>
           <Link href="/blog">
-            <Button>Back to Blog</Button>
+            <Button>{t('backToBlog')}</Button>
           </Link>
         </div>
       </div>
@@ -326,36 +330,40 @@ Welcome to the wonderful world of strategic gaming – your empire awaits!`,
             <Image 
               src="https://ik.imagekit.io/meoh789/logo-dgp.png" 
               alt="Game Catalog Logo" 
-              width={64} 
-              height={64} 
+              width={80} 
+              height={80} 
               className="rounded"
             />
           </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="text-white hover:text-blue-300 transition-colors">Home</Link>
-            <Link href="/catalog" className="text-white hover:text-blue-300 transition-colors">Catalog</Link>
-            <Link href="/trending" className="text-white hover:text-blue-300 transition-colors">Trending Games</Link>
-            <Link href="/blog" className="text-blue-300 font-semibold">Blog</Link>
+            <Link href="/" className="text-white hover:text-blue-300 transition-colors">{t('home')}</Link>
+            <Link href="/catalog" className="text-white hover:text-blue-300 transition-colors">{t('catalog')}</Link>
+            <Link href="/trending" className="text-white hover:text-blue-300 transition-colors">{t('trending')}</Link>
+            <Link href="/blog" className="text-blue-300 font-semibold">{t('blog')}</Link>
           </nav>
 
           <div className="flex items-center space-x-3">
-            <a 
-              href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
-            >
-              Telegram
-            </a>
-            <a 
-              href="https://wa.me/62816339871?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
-            >
-              WhatsApp
-            </a>
+            <LanguageSwitcher />
+            <div className="hidden md:flex items-center space-x-3">
+              <a 
+                href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
+              >
+                Telegram
+              </a>
+              <a 
+                href="https://wa.me/62816339871?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
+              >
+                WhatsApp
+              </a>
+            </div>
+            <MobileNavigation />
           </div>
         </div>
       </header>
@@ -365,7 +373,7 @@ Welcome to the wonderful world of strategic gaming – your empire awaits!`,
         {/* Back Button */}
         <Link href="/blog" className="inline-flex items-center text-gray-300 hover:text-white mb-6">
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Blog
+          {t('backToBlog')}
         </Link>
 
         <article className="max-w-4xl mx-auto">
@@ -429,7 +437,7 @@ Welcome to the wonderful world of strategic gaming – your empire awaits!`,
                 className="border-white/20 text-white hover:bg-white/10"
               >
                 <Share2 className="w-4 h-4 mr-2" />
-                Share
+                {t('share')}
               </Button>
             </div>
           </header>
@@ -447,15 +455,15 @@ Welcome to the wonderful world of strategic gaming – your empire awaits!`,
           <footer className="mt-12 pt-8 border-t border-white/20">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-white font-semibold mb-2">Share this article</h3>
-                <p className="text-gray-400 text-sm">Help others discover great gaming content</p>
+                <h3 className="text-white font-semibold mb-2">{t('shareArticle')}</h3>
+                <p className="text-gray-400 text-sm">{t('helpOthers')}</p>
               </div>
               <Button 
                 onClick={handleShare}
                 className="bg-purple-600 hover:bg-purple-700"
               >
                 <Share2 className="w-4 h-4 mr-2" />
-                Share Article
+                {t('shareArticle')}
               </Button>
             </div>
           </footer>
@@ -477,22 +485,22 @@ Welcome to the wonderful world of strategic gaming – your empire awaits!`,
                 />
               </div>
               <p className="text-gray-400 mb-4">
-                Your ultimate destination for discovering amazing games across all platforms.
+                {t('ultimateDestination')}
               </p>
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Navigation</h3>
+              <h3 className="text-white font-semibold mb-4">{t('navigation')}</h3>
               <div className="space-y-2">
-                <Link href="/" className="block text-gray-400 hover:text-white transition-colors">Home</Link>
-                <Link href="/catalog" className="block text-gray-400 hover:text-white transition-colors">Catalog</Link>
-                <Link href="/trending" className="block text-gray-400 hover:text-white transition-colors">Trending</Link>
-                <Link href="/blog" className="block text-gray-400 hover:text-white transition-colors">Blog</Link>
+                <Link href="/" className="block text-gray-400 hover:text-white transition-colors">{t('home')}</Link>
+                <Link href="/catalog" className="block text-gray-400 hover:text-white transition-colors">{t('catalog')}</Link>
+                <Link href="/trending" className="block text-gray-400 hover:text-white transition-colors">{t('trending')}</Link>
+                <Link href="/blog" className="block text-gray-400 hover:text-white transition-colors">{t('blog')}</Link>
               </div>
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Contact</h3>
+              <h3 className="text-white font-semibold mb-4">{t('contact')}</h3>
               <div className="space-y-2">
                 <a 
                   href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
@@ -514,17 +522,17 @@ Welcome to the wonderful world of strategic gaming – your empire awaits!`,
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Legal</h3>
+              <h3 className="text-white font-semibold mb-4">{t('legal')}</h3>
               <div className="space-y-2">
-                <Link href="/privacy" className="block text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
-                <Link href="/terms" className="block text-gray-400 hover:text-white transition-colors">Terms of Service</Link>
+                <Link href="/privacy" className="block text-gray-400 hover:text-white transition-colors">{t('privacyPolicy')}</Link>
+                <Link href="/terms" className="block text-gray-400 hover:text-white transition-colors">{t('termsOfService')}</Link>
               </div>
             </div>
           </div>
           
           <div className="border-t border-white/10 mt-8 pt-8 text-center">
             <p className="text-gray-400">
-              © 2025 GameVault. All rights reserved.
+              © 2025 GameVault. {t('allRightsReserved')}
             </p>
           </div>
         </div>

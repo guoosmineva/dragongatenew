@@ -119,7 +119,7 @@ export default function GameDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading game details...</div>
+        <div className="text-white text-xl">{t('loading')}</div>
       </div>
     )
   }
@@ -128,10 +128,10 @@ export default function GameDetailPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
         <div className="container mx-auto px-4 py-20 text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Game Not Found</h1>
-          <p className="text-gray-300 mb-8">The game you're looking for doesn't exist or has been removed.</p>
+          <h1 className="text-4xl font-bold text-white mb-4">{t('gameNotFound')}</h1>
+          <p className="text-gray-300 mb-8">{t('gameNotExist')}</p>
           <Link href="/catalog">
-            <Button>Back to Catalog</Button>
+            <Button>{t('backToCatalog')}</Button>
           </Link>
         </div>
       </div>
@@ -147,36 +147,40 @@ export default function GameDetailPage() {
             <Image 
               src="https://ik.imagekit.io/meoh789/logo-dgp.png" 
               alt="Game Catalog Logo" 
-              width={64} 
-              height={64} 
+              width={80} 
+              height={80} 
               className="rounded"
             />
           </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="text-white hover:text-blue-300 transition-colors">Home</Link>
-            <Link href="/catalog" className="text-white hover:text-blue-300 transition-colors">Catalog</Link>
-            <Link href="/trending" className="text-white hover:text-blue-300 transition-colors">Trending Games</Link>
-            <Link href="/blog" className="text-white hover:text-blue-300 transition-colors">Blog</Link>
+            <Link href="/" className="text-white hover:text-blue-300 transition-colors">{t('home')}</Link>
+            <Link href="/catalog" className="text-white hover:text-blue-300 transition-colors">{t('catalog')}</Link>
+            <Link href="/trending" className="text-white hover:text-blue-300 transition-colors">{t('trending')}</Link>
+            <Link href="/blog" className="text-white hover:text-blue-300 transition-colors">{t('blog')}</Link>
           </nav>
 
           <div className="flex items-center space-x-3">
-            <a 
-              href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
-            >
-              Telegram
-            </a>
-            <a 
-              href="https://wa.me/62816339871?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
-            >
-              WhatsApp
-            </a>
+            <LanguageSwitcher />
+            <div className="hidden md:flex items-center space-x-3">
+              <a 
+                href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
+              >
+                Telegram
+              </a>
+              <a 
+                href="https://wa.me/62816339871?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm transition-colors"
+              >
+                WhatsApp
+              </a>
+            </div>
+            <MobileNavigation />
           </div>
         </div>
       </header>
@@ -186,7 +190,7 @@ export default function GameDetailPage() {
         {/* Back Button */}
         <Link href="/catalog" className="inline-flex items-center text-gray-300 hover:text-white mb-6">
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Catalog
+          {t('backToCatalog')}
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -212,7 +216,7 @@ export default function GameDetailPage() {
                   <p className="text-xl text-gray-300">{game.description}</p>
                 </div>
                 <Badge variant="secondary" className="bg-purple-500/20 text-purple-300 border-purple-500/30">
-                  {game.category}
+                  {t(game.category)}
                 </Badge>
               </div>
 
@@ -221,11 +225,11 @@ export default function GameDetailPage() {
                 <div className="flex items-center">
                   <Star className="w-5 h-5 text-yellow-400 fill-current" />
                   <span className="text-white font-semibold ml-1">{game.rating}</span>
-                  <span className="text-gray-400 ml-1">({game.reviews} reviews)</span>
+                  <span className="text-gray-400 ml-1">({game.reviews} {t('reviews')})</span>
                 </div>
                 <div className="flex items-center text-gray-300">
                   <Download className="w-4 h-4 mr-1" />
-                  {game.downloads.toLocaleString()} downloads
+                  {game.downloads.toLocaleString()} {t('downloads')}
                 </div>
               </div>
             </div>
@@ -233,7 +237,7 @@ export default function GameDetailPage() {
             {/* Screenshots */}
             {game.screenshots && game.screenshots.length > 0 && (
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-white mb-4">Screenshots</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">{t('screenshots')}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {game.screenshots.map((screenshot, index) => (
                     <div key={index} className="aspect-video rounded-lg overflow-hidden">
@@ -252,7 +256,7 @@ export default function GameDetailPage() {
 
             {/* Game Description */}
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-white mb-4">About This Game</h2>
+              <h2 className="text-2xl font-bold text-white mb-4">{t('aboutGame')}</h2>
               <div className="bg-white/10 rounded-lg p-6">
                 <p className="text-gray-300 whitespace-pre-line">{game.fullDescription}</p>
               </div>
@@ -264,7 +268,7 @@ export default function GameDetailPage() {
             {/* Download Card */}
             <Card className="bg-white/10 backdrop-blur-sm border-white/20">
               <CardHeader>
-                <CardTitle className="text-white">Download Game</CardTitle>
+                <CardTitle className="text-white">{t('downloadGame')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <Button 
@@ -272,10 +276,10 @@ export default function GameDetailPage() {
                   className="w-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center gap-2 py-3"
                 >
                   <Download className="w-5 h-5" />
-                  Download Now
+                  {t('downloadNow')}
                 </Button>
                 <p className="text-gray-400 text-sm mt-3 text-center">
-                  File Size: {game.fileSize}
+                  {t('fileSize')}: {game.fileSize}
                 </p>
               </CardContent>
             </Card>
@@ -283,27 +287,27 @@ export default function GameDetailPage() {
             {/* Game Info */}
             <Card className="bg-white/10 backdrop-blur-sm border-white/20">
               <CardHeader>
-                <CardTitle className="text-white">Game Information</CardTitle>
+                <CardTitle className="text-white">{t('gameInformation')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <span className="text-gray-400">Developer:</span>
+                  <span className="text-gray-400">{t('developer')}:</span>
                   <p className="text-white">{game.developer}</p>
                 </div>
                 <div>
-                  <span className="text-gray-400">Version:</span>
+                  <span className="text-gray-400">{t('version')}:</span>
                   <p className="text-white">{game.version}</p>
                 </div>
                 <div>
-                  <span className="text-gray-400">Release Date:</span>
+                  <span className="text-gray-400">{t('releaseDate')}:</span>
                   <p className="text-white">{formatDate(game.releaseDate)}</p>
                 </div>
                 <div>
-                  <span className="text-gray-400">Requirements:</span>
+                  <span className="text-gray-400">{t('requirements')}:</span>
                   <p className="text-white">{game.requirements}</p>
                 </div>
                 <div>
-                  <span className="text-gray-400">Languages:</span>
+                  <span className="text-gray-400">{t('languages')}:</span>
                   <p className="text-white">{game.languages.join(', ')}</p>
                 </div>
               </CardContent>
@@ -312,9 +316,9 @@ export default function GameDetailPage() {
             {/* Contact Support */}
             <Card className="bg-white/10 backdrop-blur-sm border-white/20">
               <CardHeader>
-                <CardTitle className="text-white">Need Help?</CardTitle>
+                <CardTitle className="text-white">{t('needHelp')}</CardTitle>
                 <CardDescription className="text-gray-300">
-                  Contact us for support or questions about this game.
+                  {t('contactSupport')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
@@ -324,7 +328,7 @@ export default function GameDetailPage() {
                   rel="noopener noreferrer"
                   className="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center block transition-colors"
                 >
-                  Contact on Telegram
+                  {t('contactTelegram')}
                 </a>
                 <a 
                   href="https://wa.me/62816339871?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
@@ -332,7 +336,7 @@ export default function GameDetailPage() {
                   rel="noopener noreferrer"
                   className="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center block transition-colors"
                 >
-                  Contact on WhatsApp
+                  {t('contactWhatsApp')}
                 </a>
               </CardContent>
             </Card>
@@ -355,22 +359,22 @@ export default function GameDetailPage() {
                 />
               </div>
               <p className="text-gray-400 mb-4">
-                Your ultimate destination for discovering amazing games across all platforms.
+                {t('ultimateDestination')}
               </p>
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Navigation</h3>
+              <h3 className="text-white font-semibold mb-4">{t('navigation')}</h3>
               <div className="space-y-2">
-                <Link href="/" className="block text-gray-400 hover:text-white transition-colors">Home</Link>
-                <Link href="/catalog" className="block text-gray-400 hover:text-white transition-colors">Catalog</Link>
-                <Link href="/trending" className="block text-gray-400 hover:text-white transition-colors">Trending</Link>
-                <Link href="/blog" className="block text-gray-400 hover:text-white transition-colors">Blog</Link>
+                <Link href="/" className="block text-gray-400 hover:text-white transition-colors">{t('home')}</Link>
+                <Link href="/catalog" className="block text-gray-400 hover:text-white transition-colors">{t('catalog')}</Link>
+                <Link href="/trending" className="block text-gray-400 hover:text-white transition-colors">{t('trending')}</Link>
+                <Link href="/blog" className="block text-gray-400 hover:text-white transition-colors">{t('blog')}</Link>
               </div>
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Contact</h3>
+              <h3 className="text-white font-semibold mb-4">{t('contact')}</h3>
               <div className="space-y-2">
                 <a 
                   href="https://web.telegram.org/k/#@behemoth168?text=Halo%2C%20I%20am%20interested%20in%20this%20game%2C%20can%20i%20have%20more%20information%3F"
@@ -392,17 +396,17 @@ export default function GameDetailPage() {
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Legal</h3>
+              <h3 className="text-white font-semibold mb-4">{t('legal')}</h3>
               <div className="space-y-2">
-                <Link href="/privacy" className="block text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
-                <Link href="/terms" className="block text-gray-400 hover:text-white transition-colors">Terms of Service</Link>
+                <Link href="/privacy" className="block text-gray-400 hover:text-white transition-colors">{t('privacyPolicy')}</Link>
+                <Link href="/terms" className="block text-gray-400 hover:text-white transition-colors">{t('termsOfService')}</Link>
               </div>
             </div>
           </div>
           
           <div className="border-t border-white/10 mt-8 pt-8 text-center">
             <p className="text-gray-400">
-              © 2025 GameVault. All rights reserved.
+              © 2025 GameVault. {t('allRightsReserved')}
             </p>
           </div>
         </div>

@@ -301,7 +301,7 @@ yarn build
 
 ---
 
-## Step 7: PM2 Process Management
+## Step 7: PM2 Process Management (Next.js Only)
 
 ### 7.1 Create PM2 Ecosystem Configuration
 ```bash
@@ -326,55 +326,32 @@ module.exports = {
       error_file: '/var/log/pm2/gamevault-nextjs-error.log',
       out_file: '/var/log/pm2/gamevault-nextjs-out.log',
       log_file: '/var/log/pm2/gamevault-nextjs.log'
-    },
-    {
-      name: 'gamevault-strapi',
-      script: 'npm',
-      args: 'start',
-      cwd: '/var/www/gamevault/game-catalog-cms',
-      env: {
-        NODE_ENV: 'production',
-        PORT: 1337,
-        HOST: '0.0.0.0'
-      },
-      instances: 1,
-      autorestart: true,
-      watch: false,
-      max_memory_restart: '1G',
-      error_file: '/var/log/pm2/gamevault-strapi-error.log',
-      out_file: '/var/log/pm2/gamevault-strapi-out.log',
-      log_file: '/var/log/pm2/gamevault-strapi.log'
     }
   ]
 };
 EOF
 ```
 
-### 7.2 Create Log Directory
+### 7.2 Create Log Directory and Start Application
 ```bash
 mkdir -p /var/log/pm2
-```
-
-### 7.3 Start Applications with PM2
-```bash
 pm2 start ecosystem.config.js
 pm2 save
 pm2 startup
 # Follow the instructions output by the startup command
 ```
 
-### 7.4 Verify Applications Are Running
+### 7.3 Verify Application is Running
 ```bash
 pm2 status
 ```
 
-You should see both applications running:
+You should see:
 ```
 ┌─────┬──────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
 │ id  │ name             │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
 ├─────┼──────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
 │ 0   │ gamevault-nextjs │ default     │ N/A     │ fork    │ 12345    │ 30s    │ 0    │ online    │ 0%       │ 85.2mb   │ root     │ disabled │
-│ 1   │ gamevault-strapi │ default     │ N/A     │ fork    │ 12346    │ 25s    │ 0    │ online    │ 0%       │ 120.5mb  │ root     │ disabled │
 └─────┴──────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
 ```
 

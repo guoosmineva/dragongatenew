@@ -1,6 +1,6 @@
 # GameVault - Interactive Game Catalog
 
-A complete interactive game catalog web application with Next.js 14 frontend, Strapi 5 CMS backend, and PostgreSQL 15 database.
+A complete interactive game catalog web application with Next.js 14 frontend and PostgreSQL 15 database.
 
 ## 🎮 Features
 
